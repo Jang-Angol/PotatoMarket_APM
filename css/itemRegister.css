@@ -1,0 +1,78 @@
+.register-box{
+    padding: 10px;
+    width: 100%;
+}
+.register-box div{
+    padding-bottom: 20px;
+}
+.register-info th{
+    min-width: 90px;
+}
+.register-title{
+    width: 100%;
+}
+.register-title .server-select{
+    width: 80px;
+    display: inline-block;
+}
+.register-title input{
+    width: 80%;
+    display: inline-block;
+}
+.register-img{
+    text-align: center;
+}
+.img-box{
+    max-height: 360px;
+    overflow: hidden;
+}
+.img-box img{
+    min-width: 300px;
+}
+.register-info table{
+    width: 90%;
+}
+.register-info td{
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.item-price input{
+    width: 30%;
+}
+.item-opt input{
+    width: 32%;
+    display: inline-block;
+
+}
+.item-tag input{
+    width: 80%;
+}
+.submit-button{
+    width: 100%;
+    text-align: center;
+}
+.submit-button button{
+    width: 30%;
+    padding: 10px 0px 10px;
+    font-weight: 600;
+    background-color: #FFB950;
+    color: #ffffff;
+    border: none;
+    border-radius: 5%;
+    outline: none;
+}
+
+ .back_button{
+    margin-top: 30px;
+    width: 81.52px;
+    margin-left: auto;
+}
+.back_button button{
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: none;
+    color: #F4F4F2;
+    background-color: #FFB950;
+}

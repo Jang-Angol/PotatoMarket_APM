@@ -1,0 +1,71 @@
+/* logo */
+.server_icon_lute::before{
+    content:"류트";
+    font-size: 12px;
+    font-weight: bold;
+    /*position: absolute;*/
+    width: 25px;
+    height: 25px;
+    /*background-image: url("../img/lute.png");
+    background-size: 25px 25px;*/
+    background-color: #FFF462;
+    border-radius: 20%;
+    padding: 3px;
+ }
+ .server_icon_harp::before{
+    content:"하프";
+    font-size: 12px;
+    font-weight: bold;
+    /*position: absolute;*/
+    width: 25px;
+    height: 25px;
+    /*background-image: url("../img/harp.png");
+    background-size: 25px 25px;*/
+    background-color: #FF9A00;
+    border-radius: 20%;
+    padding: 3px;
+ }
+ .server_icon_mandoline::before{
+    content:"만돌";
+    font-size: 12px;
+    font-weight: bold;
+    /*position: absolute;*/
+    width: 25px;
+    height: 25px;
+    /*background-image: url("../img/mandolin.png");
+    background-size: 25px 25px;*/
+    background-color: #FF165D;
+    border-radius: 20%;
+    padding: 3px;
+ }
+ .server_icon_wolf::before{
+    content:"울프";
+    font-size: 12px;
+    font-weight: bold;
+    /*position: absolute;*/
+    width: 25px;
+    height: 25px;
+    /*background-image: url("../img/wolf.png");
+    background-size: 25px 25px;*/
+    background-color: #3EC1D3;
+    border-radius: 20%;
+    padding: 3px;
+ }
+ .trade_item_state_sell:after{
+    content:"[판매중]";
+    font-weight: bold;
+ }
+ .trade_item_state_buy:after{
+    content:"[구매중]";
+    font-weight: bold;
+}
+.trade_item_state_reservation:after{
+    content:"[예약중]";
+    color: green;
+    font-weight: bold;
+}
+.trade_item_state_complete:after{
+    content:"[거래완료]";
+    color:#BBBFCA;
+    font-weight: bold;
+}

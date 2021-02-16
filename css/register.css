@@ -1,0 +1,93 @@
+.user-register{
+	width: 100%;
+	min-height: 90vh;
+	text-align: center;
+	margin-top: 100px;
+	padding-bottom: 278px;
+}
+.user-register div{
+	margin-bottom: 50px;
+}
+.info-list{
+	margin: auto;
+}
+.user-register tr{
+    width: 300px;
+}
+.user-register td{
+	padding: 15px 0px 15px;
+}
+#user_id input, #user_pw input, #user_pw_check input{
+	width: 300px;
+}
+.server-select{
+    width: 80px;
+    display: inline-block;
+}
+#user_name input{
+    width: 220px;
+    display: inline-block;
+}
+.phonenumber{
+	display: flex;
+	justify-content: start;
+}
+.phonenumber li:not(:last-child){
+	display: inline-block;
+	width: 106.6px;
+}
+.phonenumber li:last-child{
+	width: 86.6px;
+}
+.phonenumber li > span{
+	display: inline-block;
+	padding-right: 20px;
+	position: relative;
+	width: 100%;
+}
+.phonenumber li span:after{
+	content:"-";
+	position: absolute;
+	right: 6px;
+	top: 50%;
+	margin-top: -12px;
+}
+.user-email li{
+	display: inline-block;
+	width: 150px;
+}
+.user-email li > span{
+	display: inline-block;
+	padding-right: 20px;
+	position: relative;
+	width: 100%;
+}
+.user-email li > span:after{
+	content:"@";
+	position: absolute;
+	right: 1px;
+	top: 50%;
+	margin-top: -12px;
+}
+.register_button_bar{
+    text-align: center;
+    width: 100%;
+}
+#register_button{
+	width: 200px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+    margin-top: 20px;
+    margin-left: 35%;
+    margin-right: 35%;
+    font-weight: 600;
+    color: #F4F4F4;
+	border: none;
+	background-color:  #FFB950;
+    border-radius: 5%;
+    outline: none;
+ }
+#register_button:active, #register_button:focus{
+    outline: none;
+    box-shadow: none;
+ }

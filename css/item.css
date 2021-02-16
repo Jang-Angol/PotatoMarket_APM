@@ -1,0 +1,230 @@
+.sell_item {
+    margin-top: 0px;
+    padding-top: 10px;
+    margin-left: 0;
+    margin-right: 0;
+ }
+.sail_server_icon{
+    height: 25px;
+    padding-bottom: 5px;
+ }
+ /* Sell Item List */
+.card-header{
+    text-align: center;
+    font-weight: 600;
+    background-color: #FFFFFF;
+    border-bottom: none;
+    padding: 5px 0px 5px;
+ }
+ .card-body{
+    padding: 5px 0px 5px 0px;
+ }
+ .card-title{
+    text-align: center;
+ }
+ .card_img{
+    text-align: center;
+    margin-top: 10px;
+    max-height: 140px;
+    overflow: hidden;
+ }
+ .item_name{
+    font-size: 14px;
+    font-weight: bold;
+ }
+ .item_name::before{
+    margin-right: 5px;
+ }
+ .item_price{
+    color: #FF9900;
+ }
+ .item_opt{
+    font-size: 13px;
+ }
+/* Buy Item List */
+.buy_item_table tr{
+    border-bottom: 1px solid #E8E8E8;
+}
+.buy_item_table td{
+    padding: 10px 0px 10px;
+}
+.paging{
+    text-align: center;
+}
+.buy_item_table{
+    width: 100%;
+ }
+ .buy_item_state{
+    width: 10%;
+    height: 30px;
+    text-align: center;
+    color: #020715;
+ }
+ .buy_item_server{
+    width: 10%;
+    height: 30px;
+    text-align: center;
+    color: #020715;
+ }
+ .buy_item_table th{
+    text-align: center;
+ }
+ .buy_item_table td.buy_item_title{
+    width: 50%;
+    padding-left: 10px;
+ }
+ .buy_item_table td.buy_user_name{
+    width: 15%;
+    text-align: center;
+ }
+ .buy_item_table td.buy_item_date{
+    width: 15%;
+    text-align: center;
+ }
+ /* itemSellList */
+ .sell_item_contents, .buy_item_contents{
+    margin-top: 30px;
+    padding-bottom: 278px;
+ }
+ .banner div{
+    display: none;
+    max-height: 420px;
+ }
+ .banner div.current{
+    display: block;
+ }
+ .category_bar{
+    display: flex;
+    width: 100%;
+    border-bottom: #D3CDC2;
+ }
+ .category_bar ul, .category_bar li{
+    display: inline-block;
+    font-size: 18px;
+ }
+ .category_bar li{
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+ }
+ .category_bar li.current{
+    color: #F4F4F2;
+    background-color: #D3CDC2;
+    border-radius: 5% 5% 0 0;
+ }
+ .category_bar .open_detail_search{
+    display: inline-block;
+    padding-top: 15px;
+    margin-left: auto;
+ }
+ .category_bar .open_detail_search button{
+   padding-left: 10px;
+   padding-right: 15px;
+   padding-top: 5px;
+   padding-bottom: 5px;
+   line-height: 24px;
+   border: none;
+   border-radius: 5%;
+   font-size: 14px;
+   color: #F4F4F2;
+   background-color: #FFB950;
+ }
+ .search_table{
+    margin: auto;
+    margin-top: 20%;
+ }
+ .search_table select{
+    border: none;
+    width: 80px;
+ }
+ .search_table th{
+    width: 130px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 14px;
+    font-weight: 400;
+    text-align: center;
+    color: #F4F4F2;
+    background-color: #FFB950;
+ }
+ .search_table td{
+    width: 420px;
+    padding-left: 20px;
+    background-color: #F4F4F2;
+ }
+ .search_table input[type=text]{
+    width: 120px;
+    padding-left: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 5%;
+    border: 1px solid #E8E8E8;
+ }
+ .search_table input[type=text]:focus {
+   border-color: rgba(255, 185, 80, 0.8);
+   box-shadow: 0 1px 1px rgba(255, 185, 80, 0.075) inset, 0 0 8px rgba(255, 185, 80, 0.6);
+   outline: 0 none;
+}
+ #item_name{
+    width: 380px;
+ }
+ #trade_all, #trade_ing, #trade_reservation, #trade_complete{
+   line-height: 35px;
+   margin-right: 5px;
+ }
+ label[for="trade_all"], label[for="trade_ing"], label[for="trade_reservation"], label[for="trade_complete"]{
+   margin-right: 10px;
+   margin-bottom: 0px;
+}
+ .detail_search_button{
+    width: 551px;
+    margin: auto;
+    text-align: center;
+    background-color: #F4F4F2;
+ }
+ .detail_search_button button{
+    padding-left: 30px;
+    padding-right: 35px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    line-height: 24px;
+    border: none;
+    font-size: 14px;
+    color: #F4F4F2;
+    background-color: #FFB950;
+ }
+ .detail_search_button img{
+    max-width: 100%;
+    max-height: 100%;
+    margin-right: 5px;
+    vertical-align: middle;
+ }
+ .close_detail_search{
+    width: 551px;
+    margin: auto;
+ }
+ .close_detail_search button{
+   width: 102px;
+   padding-left: 10px;
+   padding-right: 10px;
+   padding-top: 5px;
+   padding-bottom: 5px;
+   border: none;
+   color:#F4F4F2;
+   background-color: #FFB950;
+   float: right;
+ }
+ /* bottom bar */
+ .contents_bottom_bar button{
+    float: right;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: none;
+    color: #F4F4F2;
+    background-color: #FFB950;
+ }

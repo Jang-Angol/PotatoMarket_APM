@@ -1,0 +1,107 @@
+.mypage{
+    width: 100%;
+    display: table;
+    padding-bottom: 178px;
+}
+.mypage_nav{
+    display: table-cell;
+    max-width: 200px;
+    min-width: 200px;
+    height: 100%;
+    z-index: 500;
+    border-top: 2px solid #FFB950;
+    border-right: 2px solid #D3CDC2;
+    background-color: #FFFFFf;
+    font-size: 20px;
+}
+.mypage_nav .current{
+    background-color: #FFB950;
+    color: #FFFFFF;
+}
+.mypage_nav li{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 30px;
+    padding-right: 20px;
+    border-bottom: 1px solid #E8E8E8;
+    transition: 300ms;
+}
+.mypage_nav .main_menu{
+    transition-delay: 500ms;
+}
+.mypage_nav li:hover{
+    background-color: #FFB950;
+    color: #FFFFFF;
+    transition: 0ms;
+}
+.mypage_nav .submenu{
+    padding-left: 10px;
+    display: none;
+}
+.mypage_nav .submenu li{
+    border: none;
+}
+.mypage_contents{
+    display: table-cell;
+    width: 100%;
+    padding-bottom: 5%;
+}
+.category_bar{
+    margin-top: 30px;
+    margin-left: 5%;
+}
+.category_bar li{
+    display: inline-block;
+    font-size: 18px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border: 1px solid #D3CDC2;
+    border-bottom: none;
+    border-radius: 5% 5% 0 0;
+}
+.category_bar li.current{
+    color: #F4F4F2;
+    background-color: #FFB950;
+    border: 1px solid #FFB950;
+    border-bottom: none;
+ }
+ /* Warning */
+ .warning_table{
+    margin-top: 30px;
+    margin-left: 5%;
+    margin-right: 5%;
+    background-color: #FFFFFf;
+    border-top: 1px solid red;
+    border-left: 1px solid #D3CDC2;
+    border-right: 1px solid #D3CDC2;
+    border-bottom: 1px solid #D3CDC2;
+ }
+ .warning_table table{
+     width: 100%;
+ }
+ .warning_table tr{
+    width: 100%;
+ }
+ .warning_table td{
+     text-align: center;
+     padding-top: 10px;
+     padding-bottom: 10px;
+ }
+ .warning_type, .warning_due{
+     width: 25%;
+ }
+ .warning_reason{
+     width: 50%;
+ }
+/* ModifyInfo */
+.mypage_modify_info{
+    margin-top: 30px;
+}
+.mypage_modify_info h5{
+    text-align: center;
+}
+.mypage_modify_info td{
+    padding: 15px 0px 15px 0px;
+}
