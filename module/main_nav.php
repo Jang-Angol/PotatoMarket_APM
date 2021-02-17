@@ -1,6 +1,6 @@
 <nav>
     <ul class="nav_list">
-        <li class="main_menu"><a> 판매 </a>
+        <li class="main_menu"><a href="itemSell.php"> 판매 </a>
             <ul class="submenu">
                 <li><a>류트</a></li>
                 <li><a>하프</a></li>

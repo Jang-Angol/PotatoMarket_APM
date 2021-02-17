@@ -5,6 +5,9 @@
 	margin-top: 100px;
 	padding-bottom: 278px;
 }
+#registerForm{
+	padding-top: 10px;
+}
 .user-register div{
 	margin-bottom: 50px;
 }
@@ -15,16 +18,16 @@
     width: 300px;
 }
 .user-register td{
-	padding: 15px 0px 15px;
+	padding: 10px 0px 10px;
 }
-#user_id input, #user_pw input, #user_pw_check input{
+#user_id, #user_pw, #user_pw_check{
 	width: 300px;
 }
 .server-select{
     width: 80px;
     display: inline-block;
 }
-#user_name input{
+#user_name{
     width: 220px;
     display: inline-block;
 }
@@ -91,3 +94,14 @@
     outline: none;
     box-shadow: none;
  }
+.register_error{
+	display: none;
+}
+.register_error td{
+	width: 300px;
+	padding: 0;
+	padding-left: 10px;
+	padding-right: 10px;
+	color: red;
+	font-size: 12px;
+}

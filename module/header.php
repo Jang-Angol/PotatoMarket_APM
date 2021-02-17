@@ -13,7 +13,7 @@
     -->    
     <div class="middle_bar">
         <span class="logo">
-            <a>감자마켓</a>
+            <a href="/">감자마켓</a>
         </span>
         <span class="search_bar">
             <input type="text" placeholder="아이템을 검색해주세요."/>
