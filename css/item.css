@@ -31,6 +31,9 @@
  .item_name{
     font-size: 14px;
     font-weight: bold;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
  }
  .item_name::before{
     margin-right: 5px;

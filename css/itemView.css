@@ -26,12 +26,15 @@
     margin-top: 30px;
 }
 .trade_item_info{
-    margin-left: 10%;
-    margin-right: 10%;
+    margin-left: 20%;
+    margin-right: 20%;
     margin-top: 30px;
     margin-bottom: 30px;
     background-color: #F4F4F4;
     border: 1px solid #D3CDC2;
+}
+.trade_item_info table{
+    width: 100%;
 }
 .trade_item_info tr:not(:last-child){
     border-bottom: 2px solid #D3CDC2;
