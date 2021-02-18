@@ -38,6 +38,12 @@
 }
 .item-price input{
     width: 30%;
+    display: inline-block;
+}
+#price-preview{
+    margin-left: 15px;
+    font-size: 1rem;
+    color: red;
 }
 .item-opt input{
     width: 32%;
@@ -45,7 +51,13 @@
 
 }
 .item-tag input{
-    width: 80%;
+    width: 20%;
+}
+.item-tag button{
+    width: 20px;
+    height: 20px;
+    border: 1px solid #E8E8E8;
+    border-radius: 50%;
 }
 .submit-button{
     width: 100%;
