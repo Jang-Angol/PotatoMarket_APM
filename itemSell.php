@@ -1,3 +1,7 @@
+<?php
+    error_reporting(E_ALL);
+    ini_set("display_errors", 1);
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -25,28 +29,11 @@
 
             include "./module/main_nav.php";
 
-            include "./module/item/detailSearch.php";
+            include "./module/item/detailSearch_module.php";
 
-            include "./module/item/serverBanner.php";
+            include "./module/item/server_banner.php";
 
-        ?>
-
-        <div class="sell_item_contents container">
-
-        <?php
-
-            include "./module/item/serverCategory.php";
-
-            include "./module/item/itemSellList.php";
-
-        ?>
-            <div class="contents_bottom_bar">
-                <span><button>등록하기</button></span>
-            </div>
-
-        </div>
-
-        <?php
+            include "./module/item/sell/sellItem_module.php";
 
             include "./module/footer.php";
 

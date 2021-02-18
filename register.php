@@ -23,7 +23,7 @@
 
         <!--Header-->
         <header>
-            <div class="top_bar login">
+            <div class="top_bar">
                 <span><a href="/">메인페이지</a></span>
                 <span><a href="contact.php">문의하기</a></span>
             </div>
@@ -31,9 +31,9 @@
 
         <?php
 
-        include "./module/register_module.php";
+            include "./module/register_module.php";
 
-        include "./module/footer.php";
+            include "./module/footer.php";
 
         ?>
     </body>

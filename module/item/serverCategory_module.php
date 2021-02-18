@@ -11,10 +11,23 @@
     </div>
 </div>
 <script>
-//for Category
+    //for load
     $(document).ready(function(){
-        $(".category_all").addClass("current");
-    });
+        var url = location.href;
+
+        var parameter = url.slice(url.indexOf('?') + 1, url.length);
+
+        if(parameter=="lute"){
+            $(".category_lute").trigger("click");
+        } else if(parameter=="harp") {
+            $(".category_harp").trigger("click");
+        } else if(parameter=="mandoline") {
+            $(".category_mandoline").trigger("click");
+        } else if(parameter=="wolf") {
+            $(".category_wolf").trigger("click");
+        }
+    })
+    //for Category
     $(".category_bar > ul > li").click(function(){
         $(".category_bar > ul > li").removeClass("current");
         $(".banner > div").removeClass("current");

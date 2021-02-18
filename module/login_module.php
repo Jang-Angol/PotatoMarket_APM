@@ -28,9 +28,9 @@
 <script>
 
     //ID 영문소문자, 숫자, 언더바(_) 8~20자
-    var useridCheck = /[^a-zA-Z0-9_]/g;
+    var useridCheck = /^[a-zA-Z0-9_]{8,20}$/;
     //PW 영문 대소문자, 숫자, 특수문자(!,@,#,$,%,^,&,*)를 꼭 포함하여 8~20자
-    var passwordCheck = /[^a-zA-Z0-9\!\@\#\$\%\^\&\*]/g;
+    var passwordCheck = /^[a-zA-Z0-9\!\@\#\$\%\^\&\*]*$/;
 
     $("#user_id").keydown(function(key) {
         if (key.keyCode == 13) {
@@ -47,15 +47,10 @@
 
     function loginChk(){
 
-        console.log($("#user_id").val());
-        console.log($("#user_pw").val());
-        console.log($("#user_id").val().match(useridCheck));
-        console.log($("#user_pw").val().match(passwordCheck));
-
-        if(useridCheck.test($("#user_id").val())){
+        if(!useridCheck.test($("#user_id").val())){
             alert("유효하지 않은 아이디입니다.");
         }
-        if(passwordCheck.test($("#user_pw").val())){
+        if(!passwordCheck.test($("#user_pw").val())){
             alert("유효하지 않은 패스워드입니다.");
         }
 
