@@ -109,7 +109,11 @@
 .trade_apply_table_header :first-child{
     border-right: 1px solid #D3CDC2;
 }
-
+#price-preview{
+    width: 100%;
+    text-align: center;
+    color: red;
+}
 /*trade apply madal*/
 .trade_apply_layer{
     margin: auto;

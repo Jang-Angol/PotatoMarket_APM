@@ -16,7 +16,7 @@
         <div class="register-img">
             <div class="preview">
             </div>
-            <input type="file" id="item_img" accept="image/*" onchange="setPreviewImage(event);"/>
+            <input type="file" id="item_img" accept="image/*" multiple onchange="setPreviewImage(event);"/>
         </div>
         <div class="register-info">
             <table>
@@ -54,31 +54,53 @@
     var optionCheck = /[^가-힣0-9]/;
     var tagCheck = /[^가-힣0-9]/;
     var RegExpJS = /<script[^>]*>((\n|\r|.)*?)<\/script>/img;
-    var sqlProtect = /[\'\"\;\\\;\#\=\&]/g;
+    var sqlProtect = /[\'\"\;\\\#\=\&]/g;
+    var imgCheck = /((\.jpg)|(\.jpeg)|(\.gif)|(\.jfif)|(\.png)|(\.bmp)|(\.heif)|(\.bpg)|(\.svg))+/im;
     var fileNameCheck = /((\.php)|(\%)|(\.asp)|(\.jsp)|(\.\.)|(\/)|(\\)|(\?)|(\&))+/img;
 
     var tagCount = 1;
 
     function setPreviewImage(event){
-        var reader = new FileReader();
 
         $(".preview").children("img").remove();
 
-        //file name check
-        var fileValue = $("#item_img").val().split("\\");
-        var fileName = fileValue[fileValue.length-1];
-        if(fileNameCheck.test(fileName)||RegExpJS.test(fileName)){
-            alert("Filename is not allowed.");
+        //file number check
+        var maxfile = 4;
+        var fileNumber = $("#item_img")[0].files.length;
+        if(fileNumber>maxfile){
+            alert("error-file-number: file number is must lower than 4");
+            $("#item_img").val(null);
             return 0;
         }
 
-        reader.onload = function(event) {
-            var img = document.createElement("img");
-            img.setAttribute("src", event.target.result);
-            $(".preview").append(img);
-        };
+        for (var i = 0; i < fileNumber; i++){
+            var reader = new FileReader();
+            //file size check
+            var maxSize = 5*1024*1000;//5MB
+            var fileSize = $("#item_img")[0].files[i].size;
+            if(fileSize>maxSize){
+                alert("error-file-size: file size is must lower than 5MB");
+                $("#item_img").val(null);
+                $(".preview").children("img").remove();
+                return 0;
+            }
 
-        reader.readAsDataURL(event.target.files[0]);
+            //file name check
+            var fileName = $("#item_img")[0].files[i].name;
+            if(fileNameCheck.test(fileName)||RegExpJS.test(fileName)||(!imgCheck.test(fileName))){
+                    alert("Filename is not allowed.");
+                    $("#item_img").val(null);
+                    $(".preview").children("img").remove();
+                    return 0;
+            }
+            reader.onload = function(event) {
+                    var img = document.createElement("img");
+                    img.setAttribute("src", event.target.result);
+                    $(".preview").append(img);
+            };
+
+            reader.readAsDataURL(event.target.files[i]);
+        }
     }
 
     function addTag(){
@@ -117,7 +139,7 @@
                 return 0;
             }
         }
-        //img check -> file size check, file name check
+
         //price check
         if($("#price").val()==""){
             console.log("error-price-blink");
@@ -136,6 +158,7 @@
         if(RegExpJS.test($("#item-desc").val())||sqlProtect.test($("#item-desc").val())){
             console.log("error-desc");
             alert("허용되지 않는 양식입니다.");
+            return 0;
         }
         //tag check
         var tagResult = true;
