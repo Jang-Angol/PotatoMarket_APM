@@ -3,15 +3,19 @@
         <h4>회원가입</h4>
         <form method="post" id="registerForm" name="registerForm">
             <table class="info-list">
+                <tr><th>ID</th></tr>
                 <tr><td><span><input id="user_id" type="text" class="form-control" placeholder="아이디" minlength="8" maxlength="20"></span></td></tr>
-                <tr id="error_id" class="register_error"><td><span>아이디는 영문 8~20자로 입력해주세요.<span></td></tr>
-                <tr id="id_blink" class="register_error"><td><span>아이디를 입력해주세요.<span></td></tr>
+                <tr id="error_id" class="register_error"><td><span>아이디는 영문 8~20자로 입력해주세요.</span></td></tr>
+                <tr id="id_blink" class="register_error"><td><span>아이디를 입력해주세요.</span></td></tr>
+                <tr><th>PW</th></tr>
                 <tr><td><span><input id="user_pw" type="password" class="form-control" placeholder="비밀번호" minlength="8" maxlength="20"></span></td></tr>
-                <tr id="error_pw" class="register_error"><td><span>대소문자, 숫자, 특수문자(!,@,#,$,%,^,&,*)를 하나 씩 포함하여 8~20자 입력해주세요.<span></td></tr>
-                <tr id="pw_blink" class="register_error"><td><span>비밀번호를 입력해주세요.<span></td></tr>
+                <tr id="error_pw" class="register_error"><td></span>대소문자, 숫자, 특수문자(!,@,#,$,%,^,&,*)를 하나 씩 포함하여 8~20자 입력해주세요.</span></td></tr>
+                <tr id="pw_blink" class="register_error"><td><span>비밀번호를 입력해주세요.</span></td></tr>
+                <tr><th>PW check</th></tr>
                 <tr><td><span><input id="user_pw_check" type="password" class="form-control" placeholder="비밀번호 확인" minlength="8" maxlength="20"></span></td></tr>
-                <tr id="error_pw_check" class="register_error"><td><span>비밀번호가 일치하지 않습니다.<span></td></tr>
-                <tr id="pw_check_blink" class="register_error"><td><span>비밀번호 확인을 입력해주세요.<span></td></tr>
+                <tr id="error_pw_check" class="register_error"><td><span>비밀번호가 일치하지 않습니다.</span></td></tr>
+                <tr id="pw_check_blink" class="register_error"><td><span>비밀번호 확인을 입력해주세요.</span></td></tr>
+                <tr><th>서버/캐릭터명</th></tr>
                 <tr>
                     <td>
                         <span>
@@ -26,9 +30,10 @@
                         <span><input id="user_name" type="text" class="form-control" placeholder="캐릭터명"></span>
                     </td>
                 </tr>
-                <tr id="error_user_name" class="register_error"><td><span>올바르지 않은 닉네임입니다.<span></td></tr>
-                <tr id="user_server_blink" class="register_error"><td><span>서버를 선택해주세요.<span></td></tr>
-                <tr id="user_name_blink" class="register_error"><td><span>닉네임을 입력해주세요.<span></td></tr>
+                <tr id="error_user_name" class="register_error"><td><span>올바르지 않은 닉네임입니다.</span></td></tr>
+                <tr id="user_server_blink" class="register_error"><td><span>서버를 선택해주세요.</span></td></tr>
+                <tr id="user_name_blink" class="register_error"><td><span>닉네임을 입력해주세요.</span></td></tr>
+                <tr><th>Phone</th></tr>
                 <tr id="user_phonenumber">
                     <td>
                         <ul class="phonenumber clearfix">
@@ -56,8 +61,9 @@
                         </ul>
                     </td>
                 </tr>
-                <tr id="error_user_phonenumber" class="register_error"><td><span>숫자만 입력해주세요.<span></td></tr>
-                <tr id="user_phonenumber_blink"class="register_error"><td><span>연락처를 입력해주세요.<span></td></tr>
+                <tr id="error_user_phonenumber" class="register_error"><td><span>숫자만 입력해주세요.</span></td></tr>
+                <tr id="user_phonenumber_blink"class="register_error"><td><span>연락처를 입력해주세요.</span></td></tr>
+                <tr><th>Email</th></tr>
                 <tr id="user_email">
                     <td>
                         <ul class="user-email clearfix">
@@ -90,8 +96,8 @@
                         </ul>
                     </td>
                 </tr>
-                <tr id="error_user_email" class="register_error"><td><span>올바르지 않은 이메일 주소입니다.<span></td></tr>
-                <tr id="user_email_blink" class="register_error"><td><span>이메일 주소를 입력해주세요.<span></td></tr>
+                <tr id="error_user_email" class="register_error"><td><span>올바르지 않은 이메일 주소입니다.</span></td></tr>
+                <tr id="user_email_blink" class="register_error"><td><span>이메일 주소를 입력해주세요.</span></td></tr>
             </table>
             <div class="register_button_bar">
                 <button id="register_button" type="button" class="btn">가입하기</button>
@@ -123,106 +129,164 @@
     //email 체크
     var emailCheck = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
 
-    $("#register_button").click(function(){
-        let success = true;
-        console.log("click");
-        var i = 0;
 
-        $(".register_error").each(function(){
-            $(this).css("display","none");
-        })
-
+    function idCheck(){
+        $("#id_blink").css("display","none");
+        $("#error_id").css("display","none");
         //ID check
-        i++;
         if($("#user_id").val()==""){
             $("#id_blink").css("display","block");
-            success = false;
-            console.log(i);
+            return false;
         } else{
             if(!useridCheck.test($("#user_id").val())){
                 $("#error_id").css("display","block");
-                success = false;
-                console.log($("#user_id").val());
-                console.log(i+"c");
+                return false;
             }
         }
+    }
 
+    function pwCheck(){
+        $("#pw_blink").css("display","none");
+        $("#error_pw").css("display","none");
 
         //PW check
-        i++;
         if($("#user_pw").val()==""){
             $("#pw_blink").css("display","block");
-            success = false;
-            console.log(i);
+            return false;
         } else{
             if(!(passwordCheck.test($("#user_pw").val())&&passwordCheckN.test($("#user_pw").val())&&passwordCheckL.test($("#user_pw").val())&&passwordCheckU.test($("#user_pw").val())&&passwordCheckS.test($("#user_pw").val()))){
                 $("#error_pw").css("display","block");
-                success = false;
-                console.log($("#user_pw").val());
-                console.log(i+"c");
+                return false;
             }
         }
+    }
+
+    function pwCheckCheck(){
+        $("#pw_check_blink").css("display","none");
+        $("#error_pw_check").css("display","none");
+
         //PW CHECK check
-        i++;
         if($("#user_pw_check").val()==""){
             $("#pw_check_blink").css("display","block");
-            success = false;
-            console.log(i);
+            return false;
         } else{
             if($("#user_pw_check").val()!=$("#user_pw").val()){
                 $("#error_pw_check").css("display","block");
-                success = false;
-                console.log(i+"c");
+                return false;
             }
         }
-        i++;
+    }
+
+    function userNameCheck(){
+        $("#user_server_blink").css("display","none");
+        $("#user_name_blink").css("display","none");
+        $("#error_user_name").css("display","none");
+
         //USER SERVER check
         if($("#user_server").val()==""){
             $("#user_server_blink").css("display","block");
-            success = false;
-            console.log(i);
+            return false;
         }
+
         //USER NAME check
-        i++;
         if($("#user_name").val()==""){
             $("#user_name_blink").css("display","block");
-            success = false;
-            console.log(i);
+            return false;
         } else{
             if(!(userNameCheckKor.test($("#user_name").val())||userNameCheckEng.test($("#user_name").val()))){
                 $("#error_user_name").css("display","block");
-                success = false;
-                console.log($("#user_name").val());
-                console.log(i+"c");
+                return false;
             }
         }
+    }
+
+    function phoneNumberCheck(){
+        $("#user_phonenumber_blink").css("display","none");
+        $("#error_user_phonenumber").css("display","none");
+
         //PHONE NUMBER check
-        i++;
         if(($("#phonenumber_head").val()=="")||($("#phonenumber_body").val()=="")||($("#phonenumber_tail").val()=="")){
             $("#user_phonenumber_blink").css("display","block");
-            success = false;
-            console.log(i);
+            return false;
         } else{
             if(!(phonenumberCheck.test($("#phonenumber_head").val())&&phonenumberCheck.test($("#phonenumber_body").val())&&phonenumberCheck.test($("#phonenumber_tail").val()))){
                 $("#error_user_phonenumber").css("display","block");
-                success = false;
-                console.log(i+"c");
+                return false;
             }
         }
+    }
+
+    function emailCheck(){
+        $("#user_email_blink").css("display","none");
+        $("#error_user_email").css("display","none");
+
         //EMAIL check
-        i++;
         if($("#email_id").val()==""||$("#email_domain").val()==""){
             $("#user_email_blink").css("display","block");
-            success = false;
-            console.log(i);
+            return false;
         } else{
             let email = $("#email_id").val() + "@" + $("#email_domain").val();
             if(!emailCheck.test(email)){
                 $("#error_user_email").css("display","block");
-                success = false;
-                console.log(i+"c");
+                return false;
             }
         }
+    }
+
+    $("#user_id").keyup(function(){
+        idCheck();
+    });
+
+    $("#user_pw").keyup(function(){
+        pwCheck();
+    });
+
+    $("#user_pw_check").keyup(function(){
+        pwCheckCheck();
+    });
+
+    $("#user_name").keyup(function(){
+        userNameCheck();
+    });
+
+    $("#phonenumber_head").keyup(function(){
+        phoneNumberCheck();
+    });
+
+    $("#phonenumber_body").keyup(function(){
+        phoneNumberCheck();
+    });
+
+    $("#phonenumber_tail").keyup(function(){
+        phoneNumberCheck();
+    });
+
+    $("#email_domain").keyup(function(){
+        emailCheck();
+    });
+
+    $("#register_button").click(function(){
+        let success = true;
+
+        //ID check
+        success = idCheck();
+
+
+        //PW check
+        success = pwCheck();
+
+        //PW CHECK check
+        success = pwCheckCheck();
+
+        //USER SERVER check
+        success = userNameCheck();
+
+        //PHONE NUMBER check
+        success = phonenumberCheck();
+
+        //EMAIL check
+        success = emailCheck();
+
         if(success==true){
             alert("success");
         }

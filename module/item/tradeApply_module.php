@@ -17,6 +17,10 @@
     <div class="modal_layer"></div>
 </div>
 <script>
+    $(".close_modal").click(function(){
+        $(".modal").attr("style","display:none;");
+    });
+    
     //item price preview converting
     $("#apply_price").keydown(function(){convertPrice();});
 

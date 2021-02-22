@@ -56,9 +56,6 @@
     $(".trade_apply").click(function(){
         $(".modal").attr("style","display:block;");
     });
-    $(".close_modal").click(function(){
-        $(".modal").attr("style","display:none;");
-    });
     $("#apply_list_view_button").click(function(){
         if($(".trade_apply_table").css("display")=="none"){
             $(".trade_apply_table").attr("style","display:block;");

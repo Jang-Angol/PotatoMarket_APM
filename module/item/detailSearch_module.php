@@ -55,7 +55,7 @@
     });
 
     //for detail search check
-    var nameCheck = /[^a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ\,\.\?\!]/;
+    var nameCheck = /[^a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ\,\.\?\!\(\)]/;
     var optionCheck = /[^가-힣0-9]/;
 
     $(".detail_search_button > button").click(function(){
