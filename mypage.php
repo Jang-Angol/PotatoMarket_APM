@@ -16,6 +16,7 @@
         <link rel="stylesheet" href="../css/style.css" type="text/css">
         <link rel="stylesheet" href="../css/logo.css" type="text/css">
         <link rel="stylesheet" href="../css/index.css" type="text/css">
+        <link rel="stylesheet" href="../css/register.css" type="text/css">
         <link rel="stylesheet" href="../css/mypage.css" type="text/css">
         <link rel="stylesheet" href="../css/tradeHistory.css" type="text/css">
     </head>
@@ -30,7 +31,7 @@
 
         	include"./module/main_nav.php";
 
-        	include"./module/mypage/mypage_module";
+        	include"./module/mypage/mypage_module.php";
 
         	include"./module/footer.php";
 

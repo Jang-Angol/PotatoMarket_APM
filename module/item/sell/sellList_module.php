@@ -1,7 +1,7 @@
 <div class="sellItemList">
     <div class="sell_item row">
         <div class="list_item card mb-3 col-4 col-lg-3">
-            <a href="itemSellView.php">
+            <a href="itemSellView.php?id=1">
                 <div class="card-header">
                     <span class="trade_item_state_sell"></span>
                 </div>
@@ -16,7 +16,7 @@
             </a>
         </div>
         <div class="list_item card mb-3 col-4 col-lg-3">
-            <a href="itemSellView.php">
+            <a href="itemSellView.php?id=2">
                 <div class="card-header">
                     <span class="trade_item_state_reservation"></span>
                 </div>
@@ -31,7 +31,7 @@
             </a>
         </div>
         <div class="list_item card mb-3 col-4 col-lg-3">
-            <a href="itemSellView.php">
+            <a href="itemSellView.php?id=3">
                 <div class="card-header">
                     <span class="trade_item_state_complete"></span>
                 </div>

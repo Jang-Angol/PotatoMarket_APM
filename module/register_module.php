@@ -1,14 +1,14 @@
 <div class="container">
     <div class = "user-register container">
         <h4>회원가입</h4>
-        <form method="post" id="registerForm" name="registerForm">
+        <form method="post" id="registerForm" name="registerForm" action="test/register.php" onsubmit="return registerChk();">
             <table class="info-list">
                 <tr><th>ID</th></tr>
-                <tr><td><span><input id="user_id" type="text" class="form-control" placeholder="아이디" minlength="8" maxlength="20"></span></td></tr>
+                <tr><td><span><input id="user_id" name="id" type="text" class="form-control" placeholder="아이디" minlength="8" name="pw" maxlength="20"></span></td></tr>
                 <tr id="error_id" class="register_error"><td><span>아이디는 영문 8~20자로 입력해주세요.</span></td></tr>
                 <tr id="id_blink" class="register_error"><td><span>아이디를 입력해주세요.</span></td></tr>
                 <tr><th>PW</th></tr>
-                <tr><td><span><input id="user_pw" type="password" class="form-control" placeholder="비밀번호" minlength="8" maxlength="20"></span></td></tr>
+                <tr><td><span><input id="user_pw" name="pw" type="password" class="form-control" placeholder="비밀번호" minlength="8" maxlength="20"></span></td></tr>
                 <tr id="error_pw" class="register_error"><td></span>대소문자, 숫자, 특수문자(!,@,#,$,%,^,&,*)를 하나 씩 포함하여 8~20자 입력해주세요.</span></td></tr>
                 <tr id="pw_blink" class="register_error"><td><span>비밀번호를 입력해주세요.</span></td></tr>
                 <tr><th>PW check</th></tr>
@@ -19,15 +19,15 @@
                 <tr>
                     <td>
                         <span>
-                            <select id="user_server" class="server-select form-control">
+                            <select id="user_server" name="server" class="server-select form-control">
                                 <option value="">서버</option>
-                                <option value="0">LT</option>
-                                <option value="1">HP</option>
-                                <option value="2">MD</option>
-                                <option value="3">WF</option>
+                                <option value="1">LT</option>
+                                <option value="2">HP</option>
+                                <option value="3">MD</option>
+                                <option value="4">WF</option>
                             </select>
                         </span>
-                        <span><input id="user_name" type="text" class="form-control" placeholder="캐릭터명"></span>
+                        <span><input id="user_name" name="userName" type="text" class="form-control" placeholder="캐릭터명"></span>
                     </td>
                 </tr>
                 <tr id="error_user_name" class="register_error"><td><span>올바르지 않은 닉네임입니다.</span></td></tr>
@@ -100,7 +100,7 @@
                 <tr id="user_email_blink" class="register_error"><td><span>이메일 주소를 입력해주세요.</span></td></tr>
             </table>
             <div class="register_button_bar">
-                <button id="register_button" type="button" class="btn">가입하기</button>
+                <button id="register_button" type="submit" class="btn">가입하기</button>
             </div>
         </form>
     </div>
@@ -200,13 +200,14 @@
         }
     }
 
-    function phoneNumberCheck(){
+    function phoneNumCheck(){
         $("#user_phonenumber_blink").css("display","none");
         $("#error_user_phonenumber").css("display","none");
 
         //PHONE NUMBER check
         if(($("#phonenumber_head").val()=="")||($("#phonenumber_body").val()=="")||($("#phonenumber_tail").val()=="")){
             $("#user_phonenumber_blink").css("display","block");
+
             return false;
         } else{
             if(!(phonenumberCheck.test($("#phonenumber_head").val())&&phonenumberCheck.test($("#phonenumber_body").val())&&phonenumberCheck.test($("#phonenumber_tail").val()))){
@@ -214,9 +215,16 @@
                 return false;
             }
         }
+
+        let phonenumber = document.createElement("input");
+        phonenumber.setAttribute("name","phonenumber");
+        phonenumber.setAttribute("display","none");
+        phonenumber.setAttribute("value", $("#phonenumber_head").val() + $("#phonenumber_body").val() + $("#phonenumber_tail").val() );
+
+        registerForm.append(phonenumber);
     }
 
-    function emailCheck(){
+    function email_Check(){
         $("#user_email_blink").css("display","none");
         $("#error_user_email").css("display","none");
 
@@ -231,6 +239,13 @@
                 return false;
             }
         }
+
+        let email = document.createElement("input");
+        email.setAttribute("name","email");
+        email.setAttribute("display","none");
+        email.setAttribute("value", $("#email_id").val() +"@"+ $("#email_domain").val() );
+
+        registerForm.append(email);
     }
 
     $("#user_id").keyup(function(){
@@ -250,22 +265,22 @@
     });
 
     $("#phonenumber_head").keyup(function(){
-        phoneNumberCheck();
+        phoneNumCheck();
     });
 
     $("#phonenumber_body").keyup(function(){
-        phoneNumberCheck();
+        phoneNumCheck();
     });
 
     $("#phonenumber_tail").keyup(function(){
-        phoneNumberCheck();
+        phoneNumCheck();
     });
 
     $("#email_domain").keyup(function(){
-        emailCheck();
+        email_Check();
     });
 
-    $("#register_button").click(function(){
+    function registerChk(){
         let success = true;
 
         //ID check
@@ -282,15 +297,15 @@
         success = userNameCheck();
 
         //PHONE NUMBER check
-        success = phonenumberCheck();
+        success = phoneNumCheck();
 
         //EMAIL check
-        success = emailCheck();
+        success = email_Check();
 
         if(success==true){
-            alert("success");
+            return true;
         }
 
-    });
+    }
 
 </script>

@@ -17,13 +17,13 @@
 
         var parameter = url.slice(url.indexOf('?') + 1, url.length);
 
-        if(parameter=="lute"){
+        if(parameter=="server=lute"){
             $(".category_lute").trigger("click");
-        } else if(parameter=="harp") {
+        } else if(parameter=="server=harp") {
             $(".category_harp").trigger("click");
-        } else if(parameter=="mandoline") {
+        } else if(parameter=="server=mandoline") {
             $(".category_mandoline").trigger("click");
-        } else if(parameter=="wolf") {
+        } else if(parameter=="server=wolf") {
             $(".category_wolf").trigger("click");
         }
     })

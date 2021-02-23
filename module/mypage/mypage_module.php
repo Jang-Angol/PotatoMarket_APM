@@ -7,11 +7,7 @@
 
 	<div class="mypage_contents container">
 
-	<?php
-
-		include "./module/mypage/tradeOverView_module.php";
-
-	?>
+		<div id="mypage_content"></div>
 	
 	</div>
 

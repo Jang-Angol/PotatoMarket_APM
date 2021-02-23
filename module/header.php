@@ -16,24 +16,29 @@
             <a href="/">감자마켓</a>
         </span>
         <span class="search_bar">
-            <input id="header_search" type="text" maxlength="30" placeholder="아이템을 검색해주세요."/>
-            <button class="search_button"></button>
+            <form method="post" id="searchForm" name="searchForm" action="test/search.php" onsubmit="return searchChk();">
+                <input id="header_search" name="header_search" type="text" maxlength="30" placeholder="아이템을 검색해주세요."/>
+                <button type="submit" class="search_button"></button>
+            </form>
         </span>
     </div>
 </header>
 <script>
     //search check
-    var searchCheck = /[^a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ\,\.\?\!]/;
+    var searchCheck = /[^a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ\,\.\?\!\(\)]/;
 
-    $(".search_button").click(function(){
+    function searchChk(){
         if($("#header_search").val()==""){
             alert("검색창에 값을 입력해주세요.");
+            return false;
         } else{
             if(searchCheck.test($("#header_search").val())){
                 alert("not valid input");
+                return false;
             } else{
                 alert("success");
+                return true;
             }
         }
-    })
+    }
 </script>

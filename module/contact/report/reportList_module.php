@@ -19,3 +19,17 @@
         <button>신고하기</button>
     </div>
 </div>
+<script>
+    $(".report_button").click(function(){
+        $.ajax({
+            type: "post",
+            url: "module/contact/report/reportRegister_module.php",
+            success : function connect(a){
+
+                $("#contact_content").html(a); 
+                
+            },
+            error : function error(){alert("error");}
+        });
+    })
+</script>

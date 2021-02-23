@@ -21,3 +21,9 @@
         </tbody>
     </table>
 </div>
+<script>
+    $(".category_bar > ul > li").click(function(){
+        $(".category_bar > ul > li").removeClass("current");
+        $(this).addClass("current");
+    });
+</script>

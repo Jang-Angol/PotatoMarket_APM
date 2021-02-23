@@ -45,3 +45,18 @@
         </li>
     </ul>
 </div>
+<script>
+    $(".category_bar > ul > li").click(function(){
+        $(".category_bar > ul > li").removeClass("current");
+        $(this).addClass("current");
+    });
+    
+    $(".faq_contents").click(function(){
+        if($(this).children(".faq_content").is(":visible")){
+            $(this).children(".faq_content").slideUp(300);
+        }
+        else{
+            $(this).children(".faq_content").slideDown(300);
+        }
+    });
+</script>
