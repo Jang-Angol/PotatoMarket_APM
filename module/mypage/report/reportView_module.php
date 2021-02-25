@@ -3,6 +3,7 @@
         <tbody>
             <tr><th>제목</th><td>아이템 거래 사기당했어요 ㅠ</td></tr>
             <tr><th>등록일</th><td>2021.02.11</td></tr>
+            <tr><th>카테고리</th><td class="report_category">사기</td></tr>
             <tr><th>처리상태</th><td>처리중</td></tr>
             <tr><th>내용</th><td><p>지나고 하나에 그리워 파란 봄이 당신은 있습니다. 밤이 다 별 청춘이 듯합니다. 릴케 보고, 흙으로 북간도에 말 아이들의 당신은 마디씩 봅니다. 이름자를 사랑과 가득 하나에 내 별이 까닭입니다. 소녀들의 아침이 나는 다 하늘에는 나의 봅니다. 이런 써 강아지, 이네들은 풀이 멀리 파란 아직 하나의 봅니다. 이 때 가득 언덕 덮어 위에도 말 내 버리었습니다. 된 무덤 지나가는 별이 토끼, 자랑처럼 하나에 까닭입니다. 무성할 어머님, 것은 언덕 그리워 이름과, 자랑처럼 있습니다.
 
@@ -25,3 +26,17 @@
 <div class="back_button">
     <button>뒤로가기</button>
 </div>
+<script>
+    $(".back_button").click(function(){
+        $.ajax({
+            type: "post",
+            url: "module/mypage/report/reportList_module.php",
+            success : function connect(a){
+
+                $("#mypage_content").html(a); 
+                
+            },
+            error : function error(){alert("error");}
+        });
+    });
+</script>

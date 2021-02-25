@@ -16,8 +16,15 @@
             <a href="/">감자마켓</a>
         </span>
         <span class="search_bar">
-            <form method="post" id="searchForm" name="searchForm" action="test/search.php" onsubmit="return searchChk();">
-                <input id="header_search" name="header_search" type="text" maxlength="30" placeholder="아이템을 검색해주세요."/>
+            <form method="GET" id="searchForm" name="searchForm" action="tradeHistory.php" onsubmit="return searchChk();">
+                <?php
+                    if(isset($_GET["p_search"])){
+                        echo '<input id="header_search" name="p_search" type="text" value="'.$_GET['p_search'].'"maxlength="30" placeholder="아이템을 검색해주세요."/>';
+                    } else{
+                        echo '<input id="header_search" name="p_search" type="text" maxlength="30" placeholder="아이템을 검색해주세요."/>';
+                    }
+                ?>
+                
                 <button type="submit" class="search_button"></button>
             </form>
         </span>
@@ -26,7 +33,6 @@
 <script>
     //search check
     var searchCheck = /[^a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ\,\.\?\!\(\)]/;
-
     function searchChk(){
         if($("#header_search").val()==""){
             alert("검색창에 값을 입력해주세요.");

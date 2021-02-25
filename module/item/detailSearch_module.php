@@ -8,7 +8,7 @@
                 <option value="3">만돌</option>
                 <option value="4">울프</option>
             </select></td></tr>
-            <tr><th>거래상태</th><td><span><input type="checkbox" id="trade_all" checked/><label for="trade_all">전체</label></span><span><input type="checkbox" id="trade_ing" checked/><label for="trade_ing">판매중</label></span><span><input type="checkbox" id="trade_reservation" checked/><label for="trade_reservation">예약중</label></span><span><input type="checkbox" id="trade_complete" checked/><label for="trade_complete">거래완료</label></span></td></tr>
+            <tr><th>거래상태</th><td><span><input type="checkbox" id="trade_all" checked/><label for="trade_all">전체</label></span><span><input type="checkbox" id="trade_ing" checked/><label for="trade_ing">거래중</label></span><span><input type="checkbox" id="trade_reservation" checked/><label for="trade_reservation">예약중</label></span><span><input type="checkbox" id="trade_complete" checked/><label for="trade_complete">거래완료</label></span></td></tr>
             <tr><th>아이템명</th><td><span><input id="item_name" type="text" placeholder="아이템 이름 검색"/></span></td></tr>
             <tr><th>아이템 가격</th><td><span><input id="item_price_low" type="number" placeholder="골드"/></span> ~ <span><input id="item_price_high" type="number" placeholder="골드"/></span></td></tr>
             <tr><th>아이템 옵션</th><td><span><input id="item_opt1" type="text" maxlength="8" placeholder="옵션1"/></span> , <span><input id="item_opt2" type="text" maxlength="8" placeholder="옵션2"/></span> , <span><input id="item_opt3" type="text" maxlength="8" placeholder="옵션3"/></span></td></tr>
@@ -55,7 +55,7 @@
     });
 
     //for detail search check
-    var nameCheck = /[^a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ\,\.\?\!\(\)]/;
+    var nameCheck = /[^a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ\,\.\?\!\(\)\s]/;
     var optionCheck = /[^가-힣0-9]/;
 
     $(".detail_search_button > button").click(function(){

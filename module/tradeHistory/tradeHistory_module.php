@@ -1,14 +1,12 @@
 <div class="banner">
 	<img src="../img/trade.jpg"/>
 </div>
-<div class="search_box">
-	<span>검색창</span><input id="trade_search" type="text"/>
-</div>
 <div class="main_contents">
 	<div class="category_bar">
 	    <ul>
 	        <li class="current"><a>전체</a></li>
 	        <li><a>거래중</a></li>
+	        <li><a>예약중</a></li>
 	        <li><a>거래완료</a></li>
 	    </ul>
 	</div>

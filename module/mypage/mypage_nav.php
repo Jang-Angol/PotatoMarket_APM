@@ -8,7 +8,7 @@
         </li>
         <li><a id="warn">경고내역</a></li>
         <li><a id="modifyInfo">내 정보 수정</a></li>
-        <li><a href="contact.php">문의하기</a></li>
+        <li><a id="report">신고하기</a></li>
     </ul>
 </div>
 <script>
@@ -95,6 +95,19 @@
             success : function connect(a){
 
                 $("#mypage_content").html(a); 
+            },
+            error : function error(){alert("error");}
+        });
+    });
+
+    $("#report").click(function(){
+        $.ajax({
+            type: "post",
+            url: "module/mypage/report/reportList_module.php",
+            success : function connect(a){
+
+                $("#mypage_content").html(a); 
+                
             },
             error : function error(){alert("error");}
         });

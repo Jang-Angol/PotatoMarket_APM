@@ -27,5 +27,19 @@
     </div>
 </div>
 <div class="back_button">
-    <button>뒤로가기</button>
+    <button onClick="backReportList()">뒤로가기</button>
 </div>
+<script>
+    function backReportList(){
+        $.ajax({
+            type: "post",
+            url: "module/mypage/report/reportList_module.php",
+            success : function connect(a){
+
+                $("#mypage_content").html(a); 
+                
+            },
+            error : function error(){alert("error");}
+        });
+    }
+</script>
