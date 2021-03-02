@@ -1,7 +1,7 @@
 <div class="container">
     <div class = "user-register container">
         <h4>회원가입</h4>
-        <form method="post" id="registerForm" name="registerForm" action="test/register.php" onsubmit="return registerChk();">
+        <form method="post" id="registerForm" name="registerForm" action="DB/register.php" onsubmit="return registerChk();">
             <table class="info-list">
                 <tr><th>ID</th></tr>
                 <tr><td><span><input id="user_id" name="id" type="text" class="form-control" placeholder="아이디" minlength="8" name="pw" maxlength="20"></span></td></tr>
@@ -215,13 +215,6 @@
                 return false;
             }
         }
-
-        let phonenumber = document.createElement("input");
-        phonenumber.setAttribute("name","phonenumber");
-        phonenumber.setAttribute("display","none");
-        phonenumber.setAttribute("value", $("#phonenumber_head").val() + $("#phonenumber_body").val() + $("#phonenumber_tail").val() );
-
-        registerForm.append(phonenumber);
     }
 
     function email_Check(){
@@ -239,13 +232,6 @@
                 return false;
             }
         }
-
-        let email = document.createElement("input");
-        email.setAttribute("name","email");
-        email.setAttribute("display","none");
-        email.setAttribute("value", $("#email_id").val() +"@"+ $("#email_domain").val() );
-
-        registerForm.append(email);
     }
 
     $("#user_id").keyup(function(){
@@ -278,6 +264,23 @@
 
     $("#email_domain").keyup(function(){
         email_Check();
+    });
+
+    $("#register_button").click(function(){
+        let phonenumber = document.createElement("input");
+        phonenumber.setAttribute("name","phonenumber");
+        phonenumber.setAttribute("display","none");
+        phonenumber.setAttribute("value", $("#phonenumber_head").val() + $("#phonenumber_body").val() + $("#phonenumber_tail").val() );
+
+        registerForm.append(phonenumber);
+
+
+        let email = document.createElement("input");
+        email.setAttribute("name","email");
+        email.setAttribute("display","none");
+        email.setAttribute("value", $("#email_id").val() +"@"+ $("#email_domain").val() );
+
+        registerForm.append(email);
     });
 
     function registerChk(){

@@ -177,7 +177,7 @@
 
 
     //item price preview converting
-    $("#price").keydown(function(){convertPrice();});
+    $("#price").keyup(function(){convertPrice();});
 
     function convertPrice(){
         var price = $("#price").val();

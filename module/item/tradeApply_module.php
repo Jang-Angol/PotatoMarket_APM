@@ -22,7 +22,7 @@
     });
     
     //item price preview converting
-    $("#apply_price").keydown(function(){convertPrice();});
+    $("#apply_price").keyup(function(){convertPrice();});
 
     function convertPrice(){
         var price = $("#apply_price").val();

@@ -11,6 +11,10 @@
 .user-register div{
 	margin-bottom: 50px;
 }
+.user-register th {
+	font-size: 14px;
+	padding-left: 5px;
+}
 .info-list{
 	margin: auto;
 }

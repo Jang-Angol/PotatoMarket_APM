@@ -3,7 +3,7 @@
         <span><a href="/">감자마켓</a></span>
     </div>
     <div class="login_box">
-        <form method="post" id="loginForm" name="loginForm" action="test/login.php" onsubmit="return loginChk();">
+        <form method="post" id="loginForm" name="loginForm" action="DB/login.php" onsubmit="return loginChk();">
             <div class="input_box">
                 <input id="user_id" name="id" type="text" placeholder="아이디" minlength="8" maxlength="20"/>
             </div>
