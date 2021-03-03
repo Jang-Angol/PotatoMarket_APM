@@ -4,7 +4,7 @@
 		session_destroy();
 		header("Location: /");
 	} else {
-		echo "<script>alert('it's not the right direction.')</script>";
+		echo "<script>alert('it's not the right access.')</script>";
 		header("Location: /");
 	}
 ?>

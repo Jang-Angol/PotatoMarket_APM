@@ -2,6 +2,12 @@
 
 	include  "./database.php";
 
+	if(isset($_SESSION["user_no"])){
+    	echo "<script>alert('올바르지 않은 Access 입니다.');
+		history.back();</script>";
+		exit();
+    }
+
 	if(isset($_POST["id"])&&isset($_POST["pw"])){
 		$id = $_POST["id"];
 		$pw = $_POST["pw"];
@@ -34,6 +40,7 @@
 		$user_pw = $row["user_pw"];
 		//echo "user_pw: ".$user_pw."<br>";
 		$user_name = $row["user_name"];
+		$user_server = $row["server"];
 
 		$sql = "SELECT * FROM SALT_TB WHERE user_no='".$user_no."';";
 		$result = mysqli_query($connect, $sql);
@@ -57,6 +64,7 @@
 			session_start();
 			$_SESSION["user_no"] = $user_no;
 			$_SESSION["user_name"] = $user_name;
+			$_SESSION["user_server"] = $user_server;
 			header("Location: /");
 		}
 	} else {

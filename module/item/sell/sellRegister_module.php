@@ -1,47 +1,54 @@
+<?php
+    if(!isset($_SESSION["user_no"])){
+        echo "<script>alert('로그인 후 등록이 가능합니다..');
+        window.location.href='/login.php';</script>";
+    }
+?>
 <div class="main_contents">
     <hr style="margin: 20px 0px 0px; border: solid 1px #D3CDC2; width: 100%;">
-    <form class="register-box">
+    <form enctype="multipart/form-data" method="post" class="register-box" name="itemRegisterForm" action="/DB/itemRegister.php" onsubmit="registerCheck();">
+        <input type="hidden" name="trade_type" value="1" />
         <div class="register-title">
             <span>
-                <select class="server-select form-control">
+                <select class="server-select form-control" name="server">
                     <option value="">서버</option>
-                    <option value="0">LT</option>
-                    <option value="1">HP</option>
-                    <option value="2">MD</option>
-                    <option value="3">WF</option>
+                    <option value="1">LT</option>
+                    <option value="2">HP</option>
+                    <option value="3">MD</option>
+                    <option value="4">WF</option>
                 </select>
             </span>
-            <span><input id="item-name" type="text" class="form-control" placeholder="아이템명을 입력해주세요.(30자 이내)" maxlength="30" /></span>
+            <span><input id="item-name" name="title" type="text" class="form-control" placeholder="아이템명을 입력해주세요.(30자 이내)" maxlength="30" /></span>
         </div>
         <div class="register-img">
             <div class="preview">
             </div>
-            <input type="file" id="item_img" accept="image/*" multiple onchange="setPreviewImage(event);"/>
+            <input type="file" id="item_img" name="item_img[]" accept="image/*" multiple onchange="setPreviewImage(event);"/>
         </div>
         <div class="register-info">
             <table>
                 <tbody>
                     <tr>
                         <th>판매 가격</th>
-                        <td class="item-price"><input id="price" type="number" class="form-control" placeholder="골드"/><span id="price-preview"></span></td>
+                        <td class="item-price"><input id="price" name="price" type="number" class="form-control" placeholder="골드"/><span id="price-preview"></span></td>
                     </tr>
                     <tr>
                         <th>아이템 옵션</th>
-                        <td class="item-opt"><span><input id="item_opt1" type="text" class="form-control" placeholder="옵션1" maxlength="8"/></span> , <span><input id="item_opt2" type="text" class="form-control" placeholder="옵션2" maxlength="8"/></span> , <span><input id="item_opt3" type="text" class="form-control" placeholder="옵션3" maxlength="8"/></span></td>
+                        <td class="item-opt"><span><input id="item_opt1" name="item_opt1" type="text" class="form-control" placeholder="옵션1" maxlength="8"/></span> , <span><input id="item_opt2" name="item_opt2" type="text" class="form-control" placeholder="옵션2" maxlength="8"/></span> , <span><input id="item_opt3" name="item_opt3" type="text" class="form-control" placeholder="옵션3" maxlength="8"/></span></td>
                     </tr>
                     <tr>
                         <th>설명</th>
-                        <td><textarea id="item-desc" rows="5" wrap="virtual" class="form-control" maxlength="255"></textarea></td>
+                        <td><textarea id="item-desc" name="item_desc" rows="5" wrap="virtual" class="form-control" maxlength="255"></textarea></td>
                     </tr>
                     <tr>
                         <th>검색 태그</th>
-                        <td class="item-tag"><span><input type="text" class="form-control" maxlength="8"placeholder="#태그"></span><button type="button" onclick="addTag();">+</button></td>
+                        <td class="item-tag"><span><input type="text" class="form-control" name="item_tag1" maxlength="8"placeholder="#태그"></span><button type="button" onclick="addTag();">+</button></td>
                     </tr>
                 </tbody>
             </table>
         </div>
         <div class="submit-button">
-            <button type="button" onclick="register();" >등록하기</button>
+            <button type="submit" >등록하기</button>
         </div>
     </form>
     <div class="back_button">
@@ -52,7 +59,7 @@
     //Regular Expression
     var titleCheck = /[^a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ\,\.\?\!\(\)]/;
     var optionCheck = /[^가-힣0-9]/;
-    var tagCheck = /[^가-힣0-9]/;
+    var tagCheck = /[^가-힣0-9\#]/;
     var RegExpJS = /<script[^>]*>((\n|\r|.)*?)<\/script>/img;
     var sqlProtect = /[\'\"\;\\\#\=\&]/g;
     var imgCheck = /((\.jpg)|(\.jpeg)|(\.gif)|(\.jfif)|(\.png)|(\.bmp)|(\.heif)|(\.bpg)|(\.svg))+/im;
@@ -107,6 +114,7 @@
         if (tagCount < 4){
             var tag = document.createElement("input");
             tag.setAttribute("type","text");
+            tag.setAttribute("name","item_tag"+(tagCount+1));
             tag.setAttribute("class","form-control");
             tag.setAttribute("maxlength","8");
             tag.setAttribute("style","margin-left:10px;");
@@ -116,11 +124,6 @@
         } else{
             alert("태그는 4개까지만 가능합니다.");
         }
-    }
-
-    function register(){
-        if(registerCheck()){alert("success");}
-        else{alert("fail");}
     }
 
     function registerCheck(){

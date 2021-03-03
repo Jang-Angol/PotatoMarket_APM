@@ -3,7 +3,7 @@
 
 	if(!isset($_POST["id"])){
 		echo "<script>alert('올바르지 않은 데이터 입니다.');
-		window.location.href='/register.php';</script>";
+		history.back();</script>";
 	} else {
 		//POST VALUE CHECK
 		/*foreach ($_POST as $key => $value) {
@@ -25,6 +25,7 @@
 
 		//SERVER check
 		$serverChk = ($_POST["server"]!="");
+		
 		//캐릭터명 체크
 	    // 한글 2~8자+숫자 영문 3~12자+숫자
 	    // 한글,영문 혼용 불가
@@ -51,7 +52,7 @@
 
 			if($row){
 				echo "<script>alert('중복 된 ID 입니다.');
-				window.location.href='/register.php';</script>";
+				history.back();</script>";
 			} else {
 				// PW hash
 				$salt_str = base64_encode(random_bytes(32));
@@ -71,7 +72,7 @@
 
 		} else {
 			echo "<script>alert('올바르지 않은 데이터 입니다.');
-			window.location.href='/register.php';</script>";
+			history.back();</script>";
 		}
 	}
 
