@@ -1,4 +1,32 @@
 /* logo */
+.server_icon_dev::before{
+    content:"Dev";
+    font-size: 12px;
+    font-weight: bold;
+    color: #FFFFFF;
+    /*position: absolute;*/
+    width: 25px;
+    height: 25px;
+    /*background-image: url("../img/lute.png");
+    background-size: 25px 25px;*/
+    background-color: #020715;
+    border-radius: 20%;
+    padding: 3px;
+ }
+ .server_icon_manager::before{
+    content:"Manager";
+    font-size: 12px;
+    font-weight: bold;
+    color: #FFFFFF;
+    /*position: absolute;*/
+    width: 25px;
+    height: 25px;
+    /*background-image: url("../img/lute.png");
+    background-size: 25px 25px;*/
+    background-color: #020715;
+    border-radius: 10%;
+    padding: 3px;
+ }
 .server_icon_lute::before{
     content:"류트";
     font-size: 12px;

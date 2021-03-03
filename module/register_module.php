@@ -39,7 +39,7 @@
                         <ul class="phonenumber clearfix">
                             <li>
                                 <span>
-                                    <input id="phonenumber_head" class="form-control" list="user_phonenumber_head" value="010">
+                                    <input id="phonenumber_head" name="phonenumber_head" class="form-control" list="user_phonenumber_head" value="010">
                                     <datalist id="user_phonenumber_head">
                                         <option value="010">
                                         <option value="011">
@@ -52,11 +52,11 @@
                             </li>
                             <li>
                                 <span>
-                                    <input id="phonenumber_body" type="text" class="form-control" maxlength="4">
+                                    <input id="phonenumber_body" name="phonenumber_body" type="text" class="form-control" maxlength="4">
                                 </span>
                             </li>
                             <li>
-                                <input id="phonenumber_tail" type="text" class="form-control" maxlength="4">
+                                <input id="phonenumber_tail" name="phonenumber_tail" type="text" class="form-control" maxlength="4">
                             </li>
                         </ul>
                     </td>
@@ -69,11 +69,11 @@
                         <ul class="user-email clearfix">
                             <li>
                                 <span>
-                                    <input id="email_id" type="text" value="" class="form-control" placeholder="Email">
+                                    <input id="email_id" name="email_id" type="text" value="" class="form-control" placeholder="Email">
                                 </span>
                             </li>
                             <li>
-                                <input id="email_domain" class="form-control" list="user_email_domain">
+                                <input id="email_domain" name="email_domain" class="form-control" list="user_email_domain">
                                 <datalist id="user_email_domain">
                                        <option value="naver.com">
                                        <option value="hanmail.net">
@@ -266,23 +266,6 @@
         email_Check();
     });
 
-    $("#register_button").click(function(){
-        let phonenumber = document.createElement("input");
-        phonenumber.setAttribute("name","phonenumber");
-        phonenumber.setAttribute("display","none");
-        phonenumber.setAttribute("value", $("#phonenumber_head").val() + $("#phonenumber_body").val() + $("#phonenumber_tail").val() );
-
-        registerForm.append(phonenumber);
-
-
-        let email = document.createElement("input");
-        email.setAttribute("name","email");
-        email.setAttribute("display","none");
-        email.setAttribute("value", $("#email_id").val() +"@"+ $("#email_domain").val() );
-
-        registerForm.append(email);
-    });
-
     function registerChk(){
         let success = true;
 
@@ -305,10 +288,8 @@
         //EMAIL check
         success = email_Check();
 
-        if(success==true){
-            return true;
-        }
+        return success;
 
     }
-
+    
 </script>

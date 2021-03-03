@@ -1,16 +1,26 @@
+<?php
+    session_start();
+?>
 <header>
-    <div class="top_bar nlogin">
+<?php
+    if(isset($_SESSION["user_no"])){
+echo<<<_END
+        <div class="top_bar">
+        <span><a href="mypage.php">마이페이지</a></span>
+        <span><a href="DB/logout.php">로그아웃</a></span>
+        <span><a href="contact.php">문의하기</a></span>
+        </div>
+_END;
+    } else {
+echo<<<_END
+        <div class="top_bar">
         <span><a href="register.php">회원가입</a></span>
         <span><a href="login.php">로그인</a></span>
         <span><a href="contact.php">문의하기</a></span>
-    </div>
-    
-    <div class="top_bar login">
-        <span><a>마이페이지</a></span>
-        <span><a>로그아웃</a></span>
-        <span><a>문의하기</a></span>
-    </div>
-        
+        </div>
+_END;
+    }
+?>   
     <div class="middle_bar">
         <span class="logo">
             <a href="/">감자마켓</a>

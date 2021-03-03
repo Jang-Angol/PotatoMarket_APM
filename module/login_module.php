@@ -11,7 +11,7 @@
                 <input id="user_pw" name="pw" type="password" placeholder="비밀번호" minlength="8" maxlength="20"/>
             </div>
             <div class="input_box_chk">
-                <input type="checkbox" id="chkSaveID"/>
+                <input type="checkbox" id="chkSaveID" name="chkSaveID"/>
                 <label for="chkSaveID">아이디저장</label>
             </div>
             <div class="btn_login">
@@ -51,12 +51,10 @@
 
         if(!useridCheck.test($("#user_id").val())){
             alert("유효하지 않은 아이디입니다.");
-            console.log("blablabla");
             return false;
         }
         if(!passwordCheck.test($("#user_pw").val())){
             alert("유효하지 않은 패스워드입니다.");
-            console.log("blablabla");
             return false;
         }
     }
