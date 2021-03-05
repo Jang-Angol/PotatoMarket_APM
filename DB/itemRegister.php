@@ -101,7 +101,7 @@
 		exit();
 	}
 
-	if ($_FILES['item_img']['size'] == 0){
+	if (!isset($_FILES['item_img'])||($_FILES['item_img']['size'][0]==0)){
 		echo "File is none<br>";
 
 	} else {
@@ -143,7 +143,7 @@
 			}
 
 			// 파일명 변조
-			$fileName = substr(base64_encode($title),0,10).$time.'.'.$ext;
+			$fileName = $f.substr(base64_encode($title),0,10).$time.'.'.$ext;
 			 
 			// 파일 이동
 		    if(move_uploaded_file($_FILES['item_img']['tmp_name'][$f], "$upload_dir/$fileName")){

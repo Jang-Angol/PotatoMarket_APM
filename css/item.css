@@ -28,6 +28,9 @@
     max-height: 140px;
     overflow: hidden;
  }
+ .card-text{
+    text-align: center;
+ }
  .item_name{
     font-size: 14px;
     font-weight: bold;
@@ -42,6 +45,8 @@
     color: #FF9900;
  }
  .item_opt{
+    padding-left: 5px;
+    padding-right: 5px;
     font-size: 13px;
  }
 /* Buy Item List */

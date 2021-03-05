@@ -2,10 +2,11 @@
     session_start();
 ?>
 <header>
+    <div class="top_bar">
 <?php
     if(isset($_SESSION["user_no"])){
+        echo "<span><a>".$_SESSION['user_name']."</a></span>";
 echo<<<_END
-        <div class="top_bar">
         <span><a href="mypage.php">마이페이지</a></span>
         <span><a href="DB/logout.php">로그아웃</a></span>
         <span><a href="contact.php">문의하기</a></span>
@@ -13,7 +14,6 @@ echo<<<_END
 _END;
     } else {
 echo<<<_END
-        <div class="top_bar">
         <span><a href="register.php">회원가입</a></span>
         <span><a href="login.php">로그인</a></span>
         <span><a href="contact.php">문의하기</a></span>

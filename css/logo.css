@@ -1,5 +1,5 @@
 /* logo */
-.server_icon_dev::before{
+.server_icon_0::before{
     content:"Dev";
     font-size: 12px;
     font-weight: bold;
@@ -27,7 +27,7 @@
     border-radius: 10%;
     padding: 3px;
  }
-.server_icon_lute::before{
+.server_icon_1::before{
     content:"류트";
     font-size: 12px;
     font-weight: bold;
@@ -40,7 +40,7 @@
     border-radius: 20%;
     padding: 3px;
  }
- .server_icon_harp::before{
+ .server_icon_2::before{
     content:"하프";
     font-size: 12px;
     font-weight: bold;
@@ -53,7 +53,7 @@
     border-radius: 20%;
     padding: 3px;
  }
- .server_icon_mandoline::before{
+ .server_icon_3::before{
     content:"만돌";
     font-size: 12px;
     font-weight: bold;
@@ -66,7 +66,7 @@
     border-radius: 20%;
     padding: 3px;
  }
- .server_icon_wolf::before{
+ .server_icon_4::before{
     content:"울프";
     font-size: 12px;
     font-weight: bold;
@@ -79,20 +79,20 @@
     border-radius: 20%;
     padding: 3px;
  }
- .trade_item_state_sell:after{
+ .trade_item_state_11:after{
     content:"[판매중]";
     font-weight: bold;
  }
- .trade_item_state_buy:after{
+ .trade_item_state_21:after{
     content:"[구매중]";
     font-weight: bold;
 }
-.trade_item_state_reservation:after{
+.trade_item_state_12:after, .trade_item_state_22:after{
     content:"[예약중]";
     color: green;
     font-weight: bold;
 }
-.trade_item_state_complete:after{
+.trade_item_state_13:after, .trade_item_state_23:after{
     content:"[거래완료]";
     color:#BBBFCA;
     font-weight: bold;

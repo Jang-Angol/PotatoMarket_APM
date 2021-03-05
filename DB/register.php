@@ -1,5 +1,6 @@
 <?php
 	include "./database.php";
+	include "./security.php";
 
 	if(!isset($_POST["id"])){
 		echo "<script>alert('올바르지 않은 데이터 입니다.');
@@ -45,7 +46,7 @@
 		if($idChk&&$pwChkResult&&$serverChk&&$usernameChkResult&&$phonenumberChk&&$emailChk){
 			//echo "success!!<br>";
 
-			// ID 중복체크
+			// ID 중복체크 it will be 
 			$sql = "SELECT * FROM USER_TB WHERE user_id = '".$_POST["id"]."';";
 			$result =  mysqli_query($connect, $sql);
 			$row = mysqli_fetch_array($result);
@@ -57,6 +58,9 @@
 				// PW hash
 				$salt_str = base64_encode(random_bytes(32));
 				$pw = base64_encode(hash('sha256', $_POST["pw"].$salt_str, false));
+				// phone number, email encrypt
+				$phonenumber = Encrypt($phonenumber, $secret_key, $secret_iv);
+				$email = Encrypt($email, $secret_key, $secret_iv);
 				// INSERT INFO
 				$time = date("Y-m-d H:i:s");
 				$sql = "INSERT INTO USER_TB(user_id,user_pw,server,user_name,phone,email,date) VALUES('".$_POST["id"]."', '".$pw."', ".$_POST["server"].",'".$_POST["userName"]."', '".$phonenumber."', '".$email."', '".$time."');";
@@ -68,6 +72,9 @@
 				// INSERT SALT
 				$sql = "INSERT INTO SALT_TB (salt,user_no) VALUES('".$salt_str."',".$row["no"].");";
 				$result = mysqli_query($connect, $sql);
+
+				echo "<script>alert('Complete Register!!');
+					window.location.href='/login.php';</script>";
 			}
 
 		} else {
@@ -75,8 +82,6 @@
 			history.back();</script>";
 		}
 	}
-
-	
 
 	mysqli_close($connect);
 ?>

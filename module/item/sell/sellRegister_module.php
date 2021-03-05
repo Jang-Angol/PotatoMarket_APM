@@ -6,7 +6,7 @@
 ?>
 <div class="main_contents">
     <hr style="margin: 20px 0px 0px; border: solid 1px #D3CDC2; width: 100%;">
-    <form enctype="multipart/form-data" method="post" class="register-box" name="itemRegisterForm" action="/DB/itemRegister.php" onsubmit="registerCheck();">
+    <form enctype="multipart/form-data" method="post" class="register-box" name="itemRegisterForm" action="/DB/itemRegister.php" onsubmit=" return registerCheck();">
         <input type="hidden" name="trade_type" value="1" />
         <div class="register-title">
             <span>
