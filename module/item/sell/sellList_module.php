@@ -50,12 +50,12 @@ echo<<<END
 END;
 
     }
-
+    mysqli_close($connect);
 ?>
     </div>
 </div>
 <script>
-    //item price preview converting
+    //item price converting
     $(".item_price").each( function() {convertPrice(this)});
 
     function convertPrice(obj){

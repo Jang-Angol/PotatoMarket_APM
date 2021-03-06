@@ -62,9 +62,11 @@
 				setcookie("potato_id","", time(),"/login.php");
 			}
 			session_start();
+
 			$_SESSION["user_no"] = $user_no;
 			$_SESSION["user_name"] = $user_name;
 			$_SESSION["user_server"] = $user_server;
+			
 			header("Location: /");
 		}
 	} else {

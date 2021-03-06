@@ -43,11 +43,13 @@
  }
  .item_price{
     color: #FF9900;
+    font-weight: bold;
  }
  .item_opt{
     padding-left: 5px;
     padding-right: 5px;
     font-size: 13px;
+    font-weight: bold;
  }
 /* Buy Item List */
 .buy_item_table tr{

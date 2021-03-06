@@ -1,45 +1,67 @@
 <?php
-    //find from DB
+    include "./DB/database.php";
+
     if(!isset($_GET["id"])){
         echo '<script>alert("존재하지 않는 페이지 입니다.")</script>';
         echo("<script>location.href='itemSell.php';</script>");
-    } else if($_GET["id"]==1){
-        $trade_state = "trade_item_state_sell";
-        $server = "server_icon_wolf";
-        $item_name = "랑그히리스 체이서 아머(남성용)";
-        $trade_user_name = "WF앙골군";
-        $trade_item_date = "2021.01.27";
-        $item_img = "../img/item1.png";
-        $item_price = "1억5천만골드";
-        $item_opt = "희미 21, 의기 20, 어퍼19";
-        $item_desc = "전해 4 방보개조입니다.";
-        $item_tag = "#남랑그 #랑그갑 #어퍼갑 #희미";
-    } else if($_GET["id"]==2){
-        $trade_state = "trade_item_state_reservation";
-        $server = "server_icon_lute";
-        $item_name = "라멜라 무사 신발";
-        $trade_user_name = "LT앙골군";
-        $trade_item_date = "2021.02.22";
-        $item_img = "../img/fashion.png";
-        $item_price = "6천만골드";
-        $item_opt = "파힛 16 공속 7";
-        $item_desc = "파힛쓸때 좋습니다. 돌깍 개 걸을 필요없이 잡습니다.";
-        $item_tag = "#라멜라 #파힛신 #공속7";
-    } else if($_GET["id"]==3){
-        $trade_state = "trade_item_state_complete";
-        $server = "server_icon_harp";
-        $item_name = "랑그히리스 체이서 써클릿";
-        $trade_user_name = "HP앙골군";
-        $trade_item_date = "2021.02.21";
-        $item_img = "../img/fashion3.jpg";
-        $item_price = "1억골드";
-        $item_opt = "볼조19 아마12";
-        $item_desc = "망각인이 혼수상태보다 볼조는 효율 더 좋아요";
-        $item_tag = "#볼조 #아마";
-    } else{
+    }
+
+    // READ ITEM INFO
+    $sql = "SELECT * FROM ITEM_TB WHERE no = ".$_GET["id"].";";
+    $result = mysqli_query($connect, $sql);
+    $row = mysqli_fetch_array($result);
+    if(!$row){
         echo '<script>alert("존재하지 않는 페이지 입니다.")</script>';
         echo("<script>location.href='itemSell.php';</script>");
+    } else {
+        if($row["trade_type"]!=1){
+            echo("<script>location.href='itemBuyView.php?id=$_GET[id]';</script>");
+        }
     }
+    
+    $trade_state = "trade_item_state_".$row["trade_type"].$row["trade_state"];
+    $server = "server_icon_".$row["server"];
+    $item_name = $row["title"];
+    $item_desc = $row["item_desc"];
+    $item_price = $row["price"];
+    $trade_item_date = $row["date"];
+
+    //READ USER INFO
+    $user_sql = "SELECT user_name, server FROM USER_TB WHERE no = ".$row["user_no"].";";
+    $user_result = mysqli_query($connect, $user_sql);
+    $user_row = mysqli_fetch_array($user_result);
+    //CONVERTING USER server
+    switch($user_row["server"]){
+            case 0:
+                $user_server = "DEV";
+                break;
+            case 1: 
+                $user_server = "LT";
+                break;
+            case 2:
+                $user_server = "HP";
+                break;
+            case 3:
+                $user_server = "MD";
+                break;
+            case 4:
+                $user_server = "WF";
+                break;
+            default:
+                echo "Not valid value";
+                exit;
+    }
+    $trade_user_name = $user_server.$user_row["user_name"];
+
+    //READ IMG
+    $img_sql = "SELECT img_src FROM ITEM_IMG_TB WHERE item_no = ".$row["no"].";";
+    $img_result = mysqli_query($connect, $img_sql);
+    //READ OPT
+    $opt_sql = "SELECT opt FROM ITEM_OPT_TB WHERE item_no = ".$row["no"].";";
+    $opt_result = mysqli_query($connect, $opt_sql);
+    //READ TAG
+    $tag_sql = "SELECT item_tag FROM ITEM_TAG_TB WHERE item_no = ".$row["no"].";";
+    $tag_result = mysqli_query($connect, $tag_sql);
 ?>
 <div class="main_contents">
     <hr style="margin: 20px 0px 0px; border: solid 1px #495464; width: 100%;">
@@ -54,7 +76,11 @@
         </div>
         <div class="trade_item_img">
             <div class="img-box">
-                <img src="{$item_img}">
+END;
+        while($img_row = mysqli_fetch_array($img_result)){
+            echo "<img src = '$img_row[img_src]'/><br>";
+        }
+        echo<<<END
             </div>
         </div>
         <div class="trade_item_info">
@@ -66,7 +92,14 @@
                     </tr>
                     <tr>
                         <th>아이템 옵션</th>
-                        <td class="item-opt"><span>{$item_opt}</span></td>
+                        <td class="item-opt">
+END;
+        while($opt_row = mysqli_fetch_array($opt_result)){
+            echo "<span>$opt_row[opt]</span>";
+        }
+                        
+        echo<<<END
+                        </td>
                     </tr>
                     <tr>
                         <th>설명</th>
@@ -76,7 +109,14 @@
                     </tr>
                     <tr>
                         <th>검색 태그</th>
-                        <td class="item-tag"><span>{$item_tag}</span></td>
+                        <td class="item-tag">
+END;
+        while($tag_row = mysqli_fetch_array($tag_result)){
+            echo "<span>$tag_row[item_tag]</span>";
+        }
+                        
+        echo<<<END
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -114,4 +154,44 @@ END;
             $(".trade_apply_table").attr("style","display:none;");
         }
     });
+    //item price preview converting
+    $(".item-price > span").each( function() {convertPrice(this)});
+
+    function convertPrice(obj){
+        var price = $(obj).html();
+
+        if($(obj).html()==""){ $(obj).html(""); return 0;}
+
+        if(price.length>11){
+            alert("가격은 최대 999억까지 가능합니다.");
+        }
+        if(price.length<5){
+
+            $(obj).html(price+"골드");
+
+        } else if(5<=price.length&&price.length<9){
+            //ten thousand
+            var low = price.substring(price.length-4,price.length);
+            var middle = price.substring(0,price.length-4);
+            
+            if(low=="0000"){ low = "";}
+
+            $(obj).html(middle+"만"+low+"골드");
+
+        } else if(9<=price.length&&price.length<12){
+            
+            var low = price.substring(price.length-4,price.length);
+            var middle = price.substring(price.length-8,price.length-4);
+            var high = price.substring(0,price.length-8);
+
+            if(low=="0000"){low = "";}
+            if(middle=="0000"){middle = "";}
+
+            if(middle==""){
+                $(obj).html(high+"억"+low+"골드");
+            } else {
+                $(obj).html(high+"억"+middle+"만"+low+"골드");
+            }
+        }
+    }
 </script>

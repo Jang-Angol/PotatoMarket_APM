@@ -5,7 +5,27 @@
     <div class="top_bar">
 <?php
     if(isset($_SESSION["user_no"])){
-        echo "<span><a>".$_SESSION['user_name']."</a></span>";
+        switch($_SESSION["user_server"]){
+            case 0:
+                $user_server = "DEV";
+                break;
+            case 1: 
+                $user_server = "LT";
+                break;
+            case 2:
+                $user_server = "HP";
+                break;
+            case 3:
+                $user_server = "MD";
+                break;
+            case 4:
+                $user_server = "WF";
+                break;
+            default:
+                echo "Not valid value";
+                exit;
+    }
+        echo "<span><a>".$user_server.$_SESSION['user_name']."</a></span>";
 echo<<<_END
         <span><a href="mypage.php">마이페이지</a></span>
         <span><a href="DB/logout.php">로그아웃</a></span>

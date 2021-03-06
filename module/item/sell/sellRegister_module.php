@@ -144,6 +144,11 @@
         }
 
         //price check
+        /*
+
+                TO DO: protect price = "00000"
+
+        */
         if($("#price").val()==""){
             console.log("error-price-blink");
             return 0;

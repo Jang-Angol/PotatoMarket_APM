@@ -44,16 +44,20 @@
     background-color: #FFB950;
     color: #F4F4F4;
     padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 .trade_item_info td{
     width: 80%;
-    padding-top: 10px;
-    padding-bottom: 10px;
     padding-left: 10px;
 }
 .trade_item_info .item-price{
     color: #FF9900;
     font-size: 18px;
+    font-weight: bold;
+}
+.trade_item_info .item-opt span, .trade_item_info .item-tag span{
+    padding-right: 20px;
 }
 .trade_button{
     width: 100%;
