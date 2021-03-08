@@ -77,6 +77,7 @@
                     <tr>
                         <th>구매 가격</th>
                         <td class="item-price"><span>{$item_price}</span></td>
+                        <a id="price" style='display:none;'>{$item_price}</a>
                     </tr>
                     <tr>
                         <th>아이템 옵션</th>

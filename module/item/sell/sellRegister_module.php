@@ -6,7 +6,7 @@
 ?>
 <div class="main_contents">
     <hr style="margin: 20px 0px 0px; border: solid 1px #D3CDC2; width: 100%;">
-    <form enctype="multipart/form-data" method="post" class="register-box" name="itemRegisterForm" action="/DB/itemRegister.php" onsubmit=" return registerCheck();">
+    <form enctype="multipart/form-data" method="post" class="register-box" name="itemRegisterForm" action="/DB/itemRegister.php" onSubmit="return registerCheck();">
         <input type="hidden" name="trade_type" value="1" />
         <div class="register-title">
             <span>
@@ -57,7 +57,7 @@
 </div>
 <script>
     //Regular Expression
-    var titleCheck = /[^a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ\,\.\?\!\(\)]/;
+    var titleCheck = /[^a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ\,\.\?\!\(\)\s]/;
     var optionCheck = /[^가-힣0-9]/;
     var tagCheck = /[^가-힣0-9\#]/;
     var RegExpJS = /<script[^>]*>((\n|\r|.)*?)<\/script>/img;
@@ -129,44 +129,48 @@
     function registerCheck(){
         //server check
         if($(".server-select").val()==""){
-            console.log("error-server")
-            return 0;
+            console.log("error-server");
+            alert("서버를 골라주세요.");
+            return false;
         }
         //title check
         if($("#item-name").val()==""){
             console.log("error-title-blink");
-            return 0;
+            alert("제목을 입력해주세요.");
+            return false;
         } else {
             if(titleCheck.test($("#item-name").val())){
                 console.log("error-title");
-                return 0;
+                return false;
             }
         }
 
-        //price check
-        /*
-
-                TO DO: protect price = "00000"
-
-        */
+        
         if($("#price").val()==""){
             console.log("error-price-blink");
-            return 0;
+            alert("가격을 입력해주세요.");
+            return false;
+        } else if($("#price").val().indexOf(0) == 0){
+            console.log("not valid price");
+            alert("0으로 시작하는 가격은 입력할 수 없습니다.");
+            return false;
         } else {
             if($("#price").val().length>11){
-                return 0;
+                alert("가격은 최대 999억까지 가능합니다.");
+                return false;
             }
         }
         //opt check
         if(optionCheck.test($("#item_opt1").val())||optionCheck.test($("#item_opt2").val())||optionCheck.test($("#item_opt3").val())){
             console.log("error-option");
-            return 0;
+            alert("허용되지 않는 양식입니다.");
+            return false;
         }
         //desc check
         if(RegExpJS.test($("#item-desc").val())||sqlProtect.test($("#item-desc").val())){
             console.log("error-desc");
             alert("허용되지 않는 양식입니다.");
-            return 0;
+            return false;
         }
         //tag check
         var tagResult = true;
@@ -176,10 +180,11 @@
 
         if(!tagResult){
             console.log("error-tag");
-            return 0;
+            alert("허용되지 않는 양식입니다.");
+            return false;
         }
 
-        return 1;
+        return true;
 
     }
 
@@ -191,6 +196,11 @@
         var price = $("#price").val();
 
         if($("#price").val()==""){ $("#price-preview").html(""); return 0;}
+        if($("#price").val().indexOf(0) == 0){
+            console.log("not valid price");
+            alert("0으로 시작하는 가격은 입력할 수 없습니다.");
+            return false;
+        }
 
         if(price.length>11){
             alert("가격은 최대 999억까지 가능합니다.");

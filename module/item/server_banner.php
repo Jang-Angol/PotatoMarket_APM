@@ -15,8 +15,8 @@
         <img src="../img/4.jpg"/>
     </div>
 </div>
-<script>
-    $(document).ready(function(){
-        $(".category_all").addClass("current");
-    });
-</script>
+<?php
+    if(!isset($_GET["server"])){
+        echo "<script>$('.category_all').addClass('current');</script>";
+    }
+?>

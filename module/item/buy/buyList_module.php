@@ -1,9 +1,14 @@
+<?php
+    include "DB/database.php";
+?>
 <div class="buy_item_list">
     <div class="buy_item">
         <table class="buy_item_table">
 <?php
-    include "./DB/database.php";
-    $sql = "SELECT no, user_no, trade_type, trade_state, server, title, date FROM ITEM_TB WHERE trade_type = 2 ORDER BY no DESC LIMIT 8;";
+    if(!isset($sql)){
+        $sql = "SELECT no, user_no, trade_type, trade_state, server, title, date FROM ITEM_TB WHERE trade_type = 2 ORDER BY no DESC LIMIT 8;";
+    }
+    
     $result = mysqli_query($connect, $sql);
     while ($row = mysqli_fetch_array($result)){
         $user_sql = "SELECT server, user_name FROM USER_TB WHERE no = ".$row["user_no"].";";

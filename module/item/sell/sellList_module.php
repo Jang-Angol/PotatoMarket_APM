@@ -4,12 +4,13 @@
 <div class="sellItemList">
     <div class="sell_item row">
 <?php
-    $sql = "SELECT no, trade_type, trade_state, server, title, price FROM ITEM_TB WHERE trade_type = 1 ORDER BY no DESC LIMIT 8;";
+    if(!isset($sql)){
+        $sql = "SELECT no, trade_type, trade_state, server, title, price FROM ITEM_TB WHERE trade_type = 1 ORDER BY no DESC LIMIT 8;";
+    }
+    
     $result = mysqli_query($connect, $sql);
-
-    for ($i = 0; $i < 8; $i++){
-        // GET ITEM INFO
-        $row = mysqli_fetch_array($result);
+    // GET ITEM INFO
+    while($row = mysqli_fetch_array($result)){
         // GET IMG SRC
         $img_sql = "SELECT img_src FROM ITEM_IMG_TB WHERE item_no = ".$row["no"].";";
         $img_result = mysqli_query($connect, $img_sql);
@@ -48,7 +49,6 @@ echo<<<END
             </a>
         </div>
 END;
-
     }
     mysqli_close($connect);
 ?>

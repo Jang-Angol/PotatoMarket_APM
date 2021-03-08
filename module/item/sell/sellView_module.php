@@ -88,7 +88,9 @@ END;
                 <tbody>
                     <tr>
                         <th>판매 가격</th>
-                        <td class="item-price"><span>{$item_price}</span></td>
+                        <td class="item-price"><span>{$item_price}</span>
+                            <a id="price" style='display:none;'>{$item_price}</a>
+                        </td>
                     </tr>
                     <tr>
                         <th>아이템 옵션</th>
