@@ -51,6 +51,7 @@ echo<<<END
 END;
     }
     mysqli_close($connect);
+    unset($sql);
 ?>
     </div>
 </div>

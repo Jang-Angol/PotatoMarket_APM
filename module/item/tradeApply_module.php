@@ -4,7 +4,9 @@
             <?php
                 echo "<input type='hidden' name='apply_state' value='$row[trade_type]'>";
                 echo "<input type='hidden' name='item_no' value='$_GET[id]'>";
-                echo "<input type='hidden' name='apply_user_no' value='$_SESSION[user_no]'>";
+                if(isset($_SESSION["user_no"])){
+                    echo "<input type='hidden' name='apply_user_no' value='$_SESSION[user_no]'>";
+                }
             ?>
             <div class="mb-2">
                 <label for="apply_price">신청가격</label><input type="number" id="apply_price" name="apply_price"/>
@@ -36,9 +38,9 @@
             url: "DB/tradeApply.php",
             data: data,
             success : function connect(data){
-
-                console.log(data);
-
+                $(".modal").attr("style","display:none;");
+                loadTradeTable();
+                
             },
             error : function error(e){
                 alert("error");

@@ -45,6 +45,7 @@
 END;
     }
     mysqli_close($connect);
+    unset($sql);
 ?>
         </table>
     </div>
