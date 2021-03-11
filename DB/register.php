@@ -36,8 +36,8 @@
 		$usernameChkResult = ($usernameChkKor||$usernameChkEng);
 
 		//Phonenumber check
-		$phonenumber = $_POST["phonenumber_head"].$_POST["phonenumber_body"].$_POST["phonenumber_tail"];
-		$phonenumberChk = preg_match("/^[0-9]{9,12}$/", $phonenumber);
+		$phonenumber = $_POST["phonenumber_head"]."-".$_POST["phonenumber_body"]."-".$_POST["phonenumber_tail"];
+		$phonenumberChk = preg_match("/^[0-9\-]{11,14}$/", $phonenumber);
 
 		//Email check
 		$email = $_POST["email_id"]."@".$_POST["email_domain"];

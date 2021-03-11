@@ -14,7 +14,11 @@
 END;
 		while($trade_row=mysqli_fetch_array($trade_result)){
 			if($trade_row["apply_accept"] == 1){
-				$trade_state = "거래수락";
+				if($trade_row["apply_state"] == 3){
+					$trade_state = "예약수락<br>(".$trade_row["reservation_date"].")";
+				} else {
+					$trade_state = "거래수락";
+				}
 			} else {
 				if($trade_row["apply_state"] == 2){
 					$trade_state = "판매신청";
@@ -72,17 +76,24 @@ END;
 END;
 		while($trade_row=mysqli_fetch_array($trade_result)){
 			if($trade_row["apply_accept"] == 1){
-				$trade_state = "거래수락";
+				if($trade_row["apply_state"] == 3){
+					$trade_state = "예약수락<br>(".$trade_row["reservation_date"].")";
+				} else {
+					$trade_state = "거래수락";
+				}
 			} else {
-				if($trade_row["apply_state"] == 1){
+				if($trade_row["apply_state"] == 2){
 					$trade_state = "판매신청";
-				} else if($trade_row["apply_state"] == 2){
+				} else if($trade_row["apply_state"] == 1){
 					$trade_state = "구매신청";
 				} else if($trade_row["apply_state"] == 3){
 					$trade_state = "예약신청<br>(".$trade_row["reservation_date"].")";
 				}
 			}
-			echo"<tr><td><span>$trade_state</span></td>
+			if(isset($_SESSION["user_no"])&&($_SESSION["user_no"]==$trade_row["apply_user_no"])){
+				$trade_state = $trade_state." <a sclass='apply-delete'>(X)</a>";
+			}
+			echo"<tr id='$trade_row[no]'><td><span>$trade_state</span></td>
 			<td><span class='apply-price'>$trade_row[apply_price]</span>
 			</td></tr>";
 		}
@@ -94,6 +105,91 @@ END;
 	mysqli_close($connect);
 ?>
 <script>
+	//APPLY ACCEPT
+    $(".apply-accept").click(function(){
+        let trade_no = $(this).parents().parents().parents().attr("id");
+        
+        let tradeNo = document.createElement('input');
+        tradeNo.setAttribute("type", "hidden");
+        tradeNo.setAttribute("name", "trade_no");
+        tradeNo.setAttribute("value", trade_no);
+
+        $('#itemDataForm').append(tradeNo);
+
+        let data = $('#itemDataForm').serialize();
+
+        $.ajax({
+            type: "post",
+            url: "DB/tradeAccept.php",
+            data: data,
+            success : function connect(data){
+                loadTradeTable();
+                $('input[name="trade_no"]').remove();
+            },
+            error : function error(e){
+                alert("error");
+                console.log(e);
+            }
+        });
+    });
+
+    //APPLY ACCEPT
+    $(".apply-cancle").click(function(){
+        let trade_no = $(this).parents().parents().parents().attr("id");
+        
+        let tradeNo = document.createElement('input');
+        tradeNo.setAttribute("type", "hidden");
+        tradeNo.setAttribute("name", "trade_no");
+        tradeNo.setAttribute("value", trade_no);
+
+        $('#itemDataForm').append(tradeNo);
+
+        let data = $('#itemDataForm').serialize();
+
+        $.ajax({
+            type: "post",
+            url: "DB/tradeCancle.php",
+            data: data,
+            success : function connect(data){
+                loadTradeTable();
+                $('input[name="trade_no"]').remove();
+            },
+            error : function error(e){
+                alert("error");
+                console.log(e);
+            }
+        });
+    });
+
+    //APPLY DELETE
+    $(".apply-delete").click(function(){
+        let trade_no = $(this).parents().parents().parents().attr("id");
+        
+        let tradeNo = document.createElement('input');
+        tradeNo.setAttribute("type", "hidden");
+        tradeNo.setAttribute("name", "trade_no");
+        tradeNo.setAttribute("value", trade_no);
+
+        $('#itemDataForm').append(tradeNo);
+
+        let data = $('#itemDataForm').serialize();
+
+        $.ajax({
+            type: "post",
+            url: "DB/tradeApplyCancle.php",
+            data: data,
+            success : function connect(data){
+                loadTradeTable();
+                $('input[name="trade_no"]').remove();
+                console.log(data);
+            },
+            error : function error(e){
+                alert("error");
+                console.log(e);
+            }
+        });
+    });
+
 	$(".apply-price").each( function() {convertPrice(this)});
 
     function convertPrice(obj){

@@ -73,6 +73,7 @@
         <form id="itemDataForm" name="itemDataForm" method="post">
             <input type="hidden" name="item_no" value="$_GET[id]"/>
             <input type="hidden" name="user_no" value="$row[user_no]"/>
+            <input type="hidden" name="trade_type" value="$row[trade_type]"/>
         </form>
 END;    
 ?>
@@ -138,11 +139,14 @@ END;
         </div>
         <div class="trade_button">
 END;
-        if(isset($_SESSION["user_no"])&&($_SESSION["user_no"]==$row["user_no"])){
-            echo '<button class="trade_complete">거래완료</button>';
-        }
-        else {
-            echo '<button class="trade_apply">구매 신청</button>';
+        if(isset($_SESSION["user_no"])){
+            if($_SESSION["user_no"]==$row["user_no"]){
+                echo '<button class="trade_complete">거래완료</button>';
+            } else {
+                echo '<button class="trade_apply">구매 신청</button>';
+            }
+        } else {
+            echo '<button><a href="login.php">구매 신청</a></button>';
         }
         echo<<<END
             <button id="apply_list_view_button"><span id="trade_number">{$trade_count}</span></button>
@@ -173,6 +177,8 @@ END;
             $(".trade_apply_table").attr("style","display:none;");
         }
     });
+    
+
     //item price preview converting
     $(".item-price > span").each( function() {convertPrice(this)});
 
@@ -223,7 +229,8 @@ END;
             data: data,
             success : function connect(a){
 
-                $(".trade_apply_table").html(a); 
+                $(".trade_apply_table").html(a);
+                $("#trade_number").html($(".apply-price").length);
 
             },
             error : function error(){alert("error");}

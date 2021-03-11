@@ -91,7 +91,7 @@
     $("#modifyInfo").click(function(){
         $.ajax({
             type: "post",
-            url: "module/mypage/modifyInfo_module.php",
+            url: "module/mypage/modifyInfoAuth_module.php",
             success : function connect(a){
 
                 $("#mypage_content").html(a); 
