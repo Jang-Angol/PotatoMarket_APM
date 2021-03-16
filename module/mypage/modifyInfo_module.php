@@ -16,18 +16,11 @@
 ?>
 <div class="mypage_modify_info">
     <h5>내 정보 수정</h5>
-    <form>
+    <form  method="post" id="modifyInfoForm" name="modifyInfoForm" action="DB/modifyInfo.php" onsubmit="return registerChk();">
     <?php
     echo<<<END
         <table class="info-list">
-            <tr><th>PW</th></tr>
-            <tr><td><span><input id="user_pw" name="pw" type="password" class="form-control" placeholder="비밀번호" minlength="8" maxlength="20"></span></td></tr>
-            <tr id="error_pw" class="register_error"><td></span>대소문자, 숫자, 특수문자(!,@,#,$,%,^,&,*)를 하나 씩 포함하여 8~20자 입력해주세요.</span></td></tr>
-            <tr id="pw_blink" class="register_error"><td><span>비밀번호를 입력해주세요.</span></td></tr>
-            <tr><th>PW check</th></tr>
-            <tr><td><span><input id="user_pw_check" type="password" class="form-control" placeholder="비밀번호 확인" minlength="8" maxlength="20"></span></td></tr>
-            <tr id="error_pw_check" class="register_error"><td><span>비밀번호가 일치하지 않습니다.</span></td></tr>
-            <tr id="pw_check_blink" class="register_error"><td><span>비밀번호 확인을 입력해주세요.</span></td></tr>
+            <tr><td><button id="modifyPw_button" type="button">비밀번호 변경</button></td></tr>
             <tr><th>서버/캐릭터명</th></tr>
             <tr>
                 <td>
@@ -40,7 +33,7 @@
                             <option value="4">WF</option>
                         </select>
                     </span>
-                    <span><input id="user_name" name="userName" type="text" class="form-control" placeholder="캐릭터명" value=$user_name></span>
+                    <span><input id="user_name" name="userName" type="text" class="form-control" maxlength="12" placeholder="캐릭터명" value=$user_name></span>
                 </td>
             </tr>
             <tr id="error_user_name" class="register_error"><td><span>올바르지 않은 닉네임입니다.</span></td></tr>
@@ -122,18 +115,20 @@ END;
 <script>
     $(document).ready(function () {
       var server_select = $('#user_server').attr("data-server");
-      console.log(server_select);
       $('#user_server > option[value=' + server_select + ']').attr('selected', 'selected');
     });
 
-    //PW check
-    // 영문 대소문자, 숫자, 특수문자(!,@,#,$,%,^,&,*)를 꼭 포함하여 8~20자
-    var passwordCheck = /^[a-zA-Z0-9\!\@\#\$\%\^\&\*]{8,20}$/;
-    var passwordCheckN = /[0-9]/;
-    var passwordCheckL = /[a-z]/;
-    var passwordCheckU = /[A-Z]/;
-    var passwordCheckS = /[\!\@\#\$\%\^\&\*]/;
-    
+    $("#modifyPw_button").click(function(){
+        $.ajax({
+            type: "post",
+            url: "module/mypage/modifyPw_module.php",
+            success : function connect(a){
+                    $("#mypage_content").html(a); 
+                },
+                error : function error(){alert("error");}
+        });
+    });
+
     //캐릭터명 체크
     // 한글 2~8자+숫자 영문 3~12자+숫자
     // 한글,영문 혼용 불가
@@ -146,38 +141,6 @@ END;
 
     //email 체크
     var emailCheck = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-
-    function pwCheck(){
-        $("#pw_blink").css("display","none");
-        $("#error_pw").css("display","none");
-
-        //PW check
-        if($("#user_pw").val()==""){
-            $("#pw_blink").css("display","block");
-            return false;
-        } else{
-            if(!(passwordCheck.test($("#user_pw").val())&&passwordCheckN.test($("#user_pw").val())&&passwordCheckL.test($("#user_pw").val())&&passwordCheckU.test($("#user_pw").val())&&passwordCheckS.test($("#user_pw").val()))){
-                $("#error_pw").css("display","block");
-                return false;
-            }
-        }
-    }
-
-    function pwCheckCheck(){
-        $("#pw_check_blink").css("display","none");
-        $("#error_pw_check").css("display","none");
-
-        //PW CHECK check
-        if($("#user_pw_check").val()==""){
-            $("#pw_check_blink").css("display","block");
-            return false;
-        } else{
-            if($("#user_pw_check").val()!=$("#user_pw").val()){
-                $("#error_pw_check").css("display","block");
-                return false;
-            }
-        }
-    }
 
     function userNameCheck(){
         $("#user_server_blink").css("display","none");
@@ -236,14 +199,6 @@ END;
         }
     }
 
-    $("#user_pw").keyup(function(){
-        pwCheck();
-    });
-
-    $("#user_pw_check").keyup(function(){
-        pwCheckCheck();
-    });
-
     $("#user_name").keyup(function(){
         userNameCheck();
     });
@@ -267,12 +222,6 @@ END;
     function registerChk(){
         let success = true;
 
-        //PW check
-        success = pwCheck();
-
-        //PW CHECK check
-        success = pwCheckCheck();
-
         //USER SERVER check
         success = userNameCheck();
 
@@ -283,6 +232,5 @@ END;
         success = email_Check();
 
         return success;
-
     }
 </script>

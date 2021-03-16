@@ -82,7 +82,7 @@
             
             var low = apply_price.substring(apply_price.length-4,apply_price.length);
             var middle = apply_price.substring(apply_price.length-8,apply_price.length-4);
-            var high = price.substring(0,apply_price.length-8);
+            var high = apply_price.substring(0,apply_price.length-8);
 
             if(low=="0000"){low = "";}
             if(middle=="0000"){middle = "";}

@@ -68,14 +68,12 @@
     $tag_sql = "SELECT item_tag FROM ITEM_TAG_TB WHERE item_no = ".$row["no"].";";
     $tag_result = mysqli_query($connect, $tag_sql);
 
-    //FORM FOR TRADE TABLE
     echo<<<END
         <form id="itemDataForm" name="itemDataForm" method="post">
             <input type="hidden" name="item_no" value="$_GET[id]"/>
-            <input type="hidden" name="user_no" value="$row[user_no]"/>
             <input type="hidden" name="trade_type" value="$row[trade_type]"/>
         </form>
-END;    
+END;
 ?>
 <div class="main_contents">
     <hr style="margin: 20px 0px 0px; border: solid 1px #495464; width: 100%;">
@@ -139,28 +137,37 @@ END;
         </div>
         <div class="trade_button">
 END;
-        if(isset($_SESSION["user_no"])){
-            if($_SESSION["user_no"]==$row["user_no"]){
-                echo '<button class="trade_complete">거래완료</button>';
-            } else {
-                echo '<button class="trade_apply">구매 신청</button>';
-            }
+        if($row["trade_state"] == 3){
+            echo '<button class="trade_completed">거래완료</button>';
         } else {
-            echo '<button><a href="login.php">구매 신청</a></button>';
+            if(isset($_SESSION["user_no"])){
+                if($_SESSION["user_no"]==$row["user_no"]){
+                    echo '<button class="item_modify">수정</button>';
+                    echo '<button class="trade trade_complete">거래완료</button>';
+                } else {
+                    echo '<button class="trade trade_apply">구매 신청</button>';
+                }
+            } else {
+                echo '<button class="trade"><a href="login.php">구매 신청</a></button>';
+            }
         }
         echo<<<END
             <button id="apply_list_view_button"><span id="trade_number">{$trade_count}</span></button>
-        </div>
 END;
+        if(isset($_SESSION["user_no"])){
+            if($_SESSION["user_no"]==$row["user_no"]){
+                echo '<button class="item_delete">삭제</button>';
+            }
+        }
+        echo "</div>";
 ?>
         <?php
             include "./module/item/tradeApply_module.php";
         ?>
         <div class="trade_apply_table"></div>
-
-    </div>
-    <div class="back_button">
-        <button onClick="history.back()">뒤로가기</button>
+        <div class="back_button">
+            <button onClick="history.back()">뒤로가기</button>
+        </div>
     </div>
 </div>
 <script>
@@ -221,6 +228,7 @@ END;
     }
 
     function loadTradeTable(){
+
         var data = $("#itemDataForm").serialize();
 
         $.ajax({
@@ -235,5 +243,39 @@ END;
             },
             error : function error(){alert("error");}
         });
+    }
+
+    $(".trade_complete").click(function(){
+        if (confirm("거래가 완료되었습니까?") == true){
+            tradeComplete();
+         }
+    });
+
+    function tradeComplete(){
+        var form = $("#itemDataForm");
+        form.attr("action", "DB/tradeComplete.php");
+        form.submit();
+    }
+
+    $(".item_modify").click(function(){
+        itemModify();
+    });
+
+    function itemModify(){
+        var form = $("#itemDataForm");
+        form.attr("action", "itemSellModify.php");
+        form.submit();
+    }
+
+    $(".item_delete").click(function(){
+        if (confirm("정말 삭제하시겠습니까??") == true){
+            itemDelete();
+         }
+    });
+
+    function itemDelete(){
+        var form = $("#itemDataForm");
+        form.attr("action", "/DB/itemDelete.php");
+        form.submit();
     }
 </script>

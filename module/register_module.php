@@ -27,7 +27,7 @@
                                 <option value="4">WF</option>
                             </select>
                         </span>
-                        <span><input id="user_name" name="userName" type="text" class="form-control" placeholder="캐릭터명"></span>
+                        <span><input id="user_name" name="userName" type="text" class="form-control" maxlength="12" placeholder="캐릭터명"></span>
                     </td>
                 </tr>
                 <tr id="error_user_name" class="register_error"><td><span>올바르지 않은 닉네임입니다.</span></td></tr>

@@ -64,7 +64,7 @@
     text-align: center;
     padding-bottom: 50px;
 }
-.trade_button button:first-child{
+.trade_button button.trade{
     width: 111.28px;
     margin-left: 55px;
     padding: 10px 20px 10px;
@@ -74,7 +74,7 @@
     border-radius: 5%;
     color: #F4F4F4;
 }
-.trade_button button:nth-child(2){
+.trade_button #apply_list_view_button{
     width: 25px;
     height: 25px;
     margin-left: 30px;
@@ -83,6 +83,24 @@
     background-color: #FFB950;
     border: none;
     border-radius: 50%;
+}
+.trade_button .trade_completed{
+    width: 111.28px;
+    margin-left: 55px;
+    padding: 10px 20px 10px;
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+    border-radius: 5%;
+    color: #000000;
+    background-color: #E8E8E8;
+}
+.trade_button .item_modify, .trade_button .item_delete{
+    margin-left: 30px;
+    padding: 5px;
+    border: none;
+    color: #F4F4F4;
+    background-color: #FFB950;
 }
 .trade_apply_table{
     display: none;

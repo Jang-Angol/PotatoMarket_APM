@@ -3,15 +3,26 @@
 
 	session_start();
 
+	$sql = "SELECT trade_state, user_no FROM ITEM_TB WHERE no = $_POST[item_no];";
+	$result = mysqli_query($connect, $sql);
+	$row = mysqli_fetch_array($result);
+
 	$trade_sql = "SELECT * FROM TRADE_TB WHERE item_no = $_POST[item_no];";
 	$trade_result = mysqli_query($connect, $trade_sql);
 
-	if((isset($_SESSION["user_no"]))&&($_SESSION["user_no"] == $_POST["user_no"])){
+	if((isset($_SESSION["user_no"]))&&($_SESSION["user_no"] == $row["user_no"])){
 	echo<<<END
 		<table>
 	        <tbody>
-	            <tr class="trade_apply_table_header"><th>신청자</th><th>신청 상태</th><th>신청 가격</th><th>신청수락</th></tr>
+	            <tr class="trade_apply_table_header"><th>신청자</th><th>신청 상태</th><th>신청 가격</th>
 END;
+		if($row["trade_state"]!=3){
+			echo "<th>신청수락</th></tr>";
+		} else{
+			echo"</tr>";
+		}
+		
+
 		while($trade_row=mysqli_fetch_array($trade_result)){
 			if($trade_row["apply_accept"] == 1){
 				if($trade_row["apply_state"] == 3){
@@ -57,12 +68,16 @@ END;
 				<a class='hidden_price' style='display:none;'>$trade_row[apply_price]</a>
 			</td>
 			";
-			if($trade_row["apply_accept"] != 1){
-				echo"<td><span><a class='apply-accept'>수락하기</a></span></td></tr>";
+			if($row["trade_state"]!=3){
+				if($trade_row["apply_accept"] != 1){
+					echo"<td><span><a class='apply-accept'>수락하기</a></span></td></tr>";
+				} else {
+					echo"<td><span><a class='apply-cancle'>수락취소</a></span></td></tr>";
+				}
 			} else {
-				echo"<td><span><a class='apply-cancle'>수락취소</a></span></td></tr>";
+				echo"</tr>";
 			}
-			
+
 		}
 		echo<<<END
 	        </tbody>
@@ -91,7 +106,7 @@ END;
 				}
 			}
 			if(isset($_SESSION["user_no"])&&($_SESSION["user_no"]==$trade_row["apply_user_no"])){
-				$trade_state = $trade_state." <a sclass='apply-delete'>(X)</a>";
+				$trade_state = $trade_state." <a class='apply-delete'>(X)</a>";
 			}
 			echo"<tr id='$trade_row[no]'><td><span>$trade_state</span></td>
 			<td><span class='apply-price'>$trade_row[apply_price]</span>
@@ -124,6 +139,9 @@ END;
             data: data,
             success : function connect(data){
                 loadTradeTable();
+                if(data == "item_state_change(1234)"){
+                	location.reload();
+                }
                 $('input[name="trade_no"]').remove();
             },
             error : function error(e){
@@ -152,6 +170,10 @@ END;
             data: data,
             success : function connect(data){
                 loadTradeTable();
+                if(data == "item_state_change(1234)"){
+                	location.reload();
+                }
+                console.log(data);
                 $('input[name="trade_no"]').remove();
             },
             error : function error(e){
@@ -180,6 +202,9 @@ END;
             data: data,
             success : function connect(data){
                 loadTradeTable();
+                if(data == "item_state_change(1234)"){
+                	location.reload();
+                }
                 $('input[name="trade_no"]').remove();
                 console.log(data);
             },

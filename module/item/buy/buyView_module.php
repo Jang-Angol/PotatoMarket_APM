@@ -26,6 +26,11 @@
     $item_price = $row["price"];
     $trade_item_date = $row["date"];
 
+    //GET TRADE COUNT
+    $trade_result = mysqli_query($connect, "SELECT COUNT(*) as trade_count FROM TRADE_TB WHERE item_no = $row[no];");
+    $trade_row = mysqli_fetch_array($trade_result);
+    $trade_count = $trade_row["trade_count"];
+
     //READ USER INFO
     $user_sql = "SELECT user_name, server FROM USER_TB WHERE no = ".$row["user_no"].";";
     $user_result = mysqli_query($connect, $user_sql);
@@ -59,6 +64,13 @@
     //READ TAG
     $tag_sql = "SELECT item_tag FROM ITEM_TAG_TB WHERE item_no = ".$row["no"].";";
     $tag_result = mysqli_query($connect, $tag_sql);
+
+    echo<<<END
+        <form id="itemDataForm" name="itemDataForm" method="post">
+            <input type="hidden" name="item_no" value="$_GET[id]"/>
+            <input type="hidden" name="trade_type" value="$row[trade_type]"/>
+        </form>
+END;
 ?>
 <div class="main_contents">
     <hr style="margin: 20px 0px 0px; border: solid 1px #495464; width: 100%;">
@@ -111,28 +123,44 @@ END;
             </table>
         </div>
         <div class="trade_button">
-            <button class="trade_apply">판매 신청</button><button id="apply_list_view_button"><span id="trade_number">2</span></button>
-        </div>
 END;
+        if($row["trade_state"] == 3){
+            echo '<button class="trade_completed">거래완료</button>';
+        } else {
+            if(isset($_SESSION["user_no"])){
+                if($_SESSION["user_no"]==$row["user_no"]){
+                    echo '<button class="item_modify">수정</button>';
+                    echo '<button class="trade trade_complete">거래완료</button>';
+                } else {
+                    echo '<button class="trade trade_apply">판매 신청</button>';
+                }
+            } else {
+                echo '<button class="trade"><a href="login.php">판매 신청</a></button>';
+            }
+        }
+        echo<<<END
+            <button id="apply_list_view_button"><span id="trade_number">{$trade_count}</span></button>
+END;
+        if(isset($_SESSION["user_no"])){
+            if($_SESSION["user_no"]==$row["user_no"]){
+                echo '<button class="item_delete">삭제</button>';
+            }
+        }
+        echo "</div>"
 ?>
         <?php
             include "./module/item/tradeApply_module.php";
         ?>
-        <div class="trade_apply_table">
-            <table>
-                <tbody>
-                    <tr class="trade_apply_table_header"><th>신청 상태</th><th>신청 가격</th></tr>
-                    <tr><td><span>판매신청</span></td><td><span>1억5천숲</span></td></tr>
-                    <tr><td><span>판매신청</span></td><td><span>1억6천숲</span></td></tr>
-                </tbody>
-            </table>
+        <div class="trade_apply_table"></div>
+        <div class="back_button">
+            <button onClick="history.back()">뒤로가기</button>
         </div>
-    </div>
-    <div class="back_button">
-        <button onClick="history.back()">뒤로가기</button>
     </div>
 </div>
 <script>
+    $(document).ready(function(){
+        loadTradeTable();
+    });
     $(".trade_apply").click(function(){
         $(".modal").attr("style","display:block;");
     });
@@ -183,4 +211,56 @@ END;
             }
         }
     }
+
+    function loadTradeTable(){
+
+        var data = $("#itemDataForm").serialize();
+
+        $.ajax({
+            type: "post",
+            url: "module/item/tradeTable_module.php",
+            data: data,
+            success : function connect(a){
+
+                $(".trade_apply_table").html(a);
+                $("#trade_number").html($(".apply-price").length);
+
+            },
+            error : function error(){alert("error");}
+        });
+    }
+
+    $(".trade_complete").click(function(){
+        if (confirm("거래가 완료되었습니까?") == true){
+            tradeComplete();
+         }
+    });
+
+    function tradeComplete(){
+        var form = $("#itemDataForm");
+        form.attr("action", "DB/tradeComplete.php");
+        form.submit();
+    }
+
+    $(".item_modify").click(function(){
+        itemModify();
+    });
+
+    function itemModify(){
+        var form = $("#itemDataForm");
+        form.attr("action", "itemBuyModify.php");
+        form.submit();
+    }
+
+    $(".item_delete").click(function(){
+        if (confirm("정말 삭제하시겠습니까??") == true){
+            itemDelete();
+         }
+    });
+
+    function itemDelete(){
+        var form = $("#itemDataForm");
+        form.attr("action", "/DB/itemDelete.php");
+        form.submit();
+    }    
 </script>
