@@ -8,7 +8,7 @@
             <span>총 거래내역</span>
         </div>
         <div class="card-body">
-            <div class="card-text">
+            <div class="card-text trade_all">
                 <span class="trade_ing">진행중</span><span class="trade_number">X건</span>
                 <span class="trade_complete">거래완료</span><span class="trade_number">X건</span>
             </div>
@@ -19,7 +19,7 @@
             <span>판매내역</span>
         </div>
         <div class="card-body">
-            <div class="card-text">
+            <div class="card-text trade_sell">
                 <span class="trade_ing">진행중</span><span class="trade_number">X건</span>
                 <span class="trade_complete">거래완료</span><span class="trade_number">X건</span>
             </div>
@@ -30,7 +30,7 @@
             <span>구매내역</span>
         </div>
         <div class="card-body">
-            <div class="card-text">
+            <div class="card-text trade_buy">
                 <span class="trade_ing">진행중</span><span class="trade_number">X건</span>
                 <span class="trade_complete">거래완료</span><span class="trade_number">X건</span>
             </div>
@@ -67,6 +67,11 @@ END;
     </table>
 </div>
 <script>
+    $(document).ready(function(){
+        countSellTrade();
+        countBuyTrade();
+        countAllTrade();
+    });
     //item price converting
     $(".trade_price").each( function() {convertPrice(this)});
 
@@ -106,5 +111,26 @@ END;
                 $(obj).html(high+"억"+middle+"만"+low+"골드");
             }
         }
+    }
+
+    function countAllTrade(){
+        var ingCount = $(".trade_item_state_11").length + $(".trade_item_state_12").length + $(".trade_item_state_21").length + $(".trade_item_state_22").length;
+        $(".trade_all > .trade_ing").next().html(ingCount+"건");
+        var edCount = $(".trade_item_state_13").length + $(".trade_item_state_23").length;
+        $(".trade_all > .trade_complete").next().html(edCount+"건");
+    }
+
+    function countSellTrade(){
+        var ingCount = $(".trade_item_state_11").length + $(".trade_item_state_12").length;
+        $(".trade_sell > .trade_ing").next().html(ingCount+"건");
+        var edCount = $(".trade_item_state_13").length;
+        $(".trade_sell > .trade_complete").next().html(edCount+"건");
+    }
+
+    function countBuyTrade(){
+        var ingCount = $(".trade_item_state_21").length + $(".trade_item_state_22").length;
+        $(".trade_buy > .trade_ing").next().html(ingCount+"건");
+        var edCount = $(".trade_item_state_23").length;
+        $(".trade_buy > .trade_complete").next().html(edCount+"건");
     }
 </script>

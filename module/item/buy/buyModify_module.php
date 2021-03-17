@@ -44,6 +44,7 @@
     <hr style="margin: 20px 0px 0px; border: solid 1px #D3CDC2; width: 100%;">
     <form enctype="multipart/form-data" method="post" class="register-box" name="itemModifyForm" action="/DB/itemModify.php" onSubmit="return registerCheck();">
         <input type="hidden" name="trade_type" value="2"/>
+        <input type="hidden" name="item_no" value="$_POST[item_no]"/>
         <div class="register-title">
             <span>
                 <select class="server-select form-control" name="server" data-server=$server>

@@ -204,17 +204,17 @@ img {vertical-align: middle;}
     border-radius: 20%;
     padding: 3px;
  }
- th.label_notice::after{
+ th.label_1::after{
     content: "공지";
     color: #020715;
     background-color: #FFF462;
  }
- th.label_warning::after{
+ th.label_3::after{
     content: "경고";
     color: #F4F4F2;
     background-color: red;
  }
- th.label_fatch::after{
+ th.label_2::after{
     content: "점검";
     color: #F4F4F2;
     background-color: #495464;

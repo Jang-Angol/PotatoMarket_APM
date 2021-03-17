@@ -117,9 +117,9 @@ END;
                     </tr>
                     <tr>
                         <th>설명</th>
-                        <td><p>
+                        <td><pre>
                             {$item_desc}
-                        </p></td>
+                        </pre></td>
                     </tr>
                     <tr>
                         <th>검색 태그</th>

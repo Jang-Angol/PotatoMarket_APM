@@ -5,7 +5,6 @@
 
     ?>
     <div class="contact_contents container">
-        <div id="contact_content">
-        </div>
+        <div id="contact_content"></div>
     </div>
 </div>

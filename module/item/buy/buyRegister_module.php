@@ -54,7 +54,7 @@
     //Regular Expression
     var titleCheck = /[^a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ\,\.\?\!\(\)\s]/;
     var optionCheck = /[^가-힣0-9]/;
-    var tagCheck = /[^가-힣0-9#]/;
+    var tagCheck = /[^가-힣0-9\#]/;
     var RegExpJS = /<script[^>]*>((\n|\r|.)*?)<\/script>/img;
     var sqlProtect = /[\'\"\;\\\#\=\&]/g;
 

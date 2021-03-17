@@ -34,16 +34,15 @@
             }
             //LOAD ITEM IMG
             $img = array();
-            $img_sql = "SELECT img_src FROM ITEM_IMG_TB WHERE item_no = $row[no];";
+            $img_sql = "SELECT no, img_src FROM ITEM_IMG_TB WHERE item_no = $row[no];";
             $img_result = mysqli_query($connect, $img_sql);
-            while($row = mysqli_fetch_array($img_result)){
-                array_push($img, $row["img_src"]);
-            }
+            
             echo<<<END
 <div class="main_contents">
     <hr style="margin: 20px 0px 0px; border: solid 1px #D3CDC2; width: 100%;">
     <form enctype="multipart/form-data" method="post" class="register-box" name="itemModifyForm" action="/DB/itemModify.php" onSubmit="return registerCheck();">
         <input type="hidden" name="trade_type" value="1"/>
+        <input type="hidden" name="item_no" value="$_POST[item_no]"/>
         <div class="register-title">
             <span>
                 <select class="server-select form-control" name="server" data-server=$server>
@@ -58,6 +57,11 @@
         </div>
         <div class="register-img">
             <div class="preview">
+END;
+        while($row = mysqli_fetch_array($img_result)){
+            echo "<div class='saved_img'><img img_id='$row[no]' class='prev_img' src='$row[img_src]'/><button class='img_delete' type='button'>X</button></div>";
+        }
+echo<<<END
             </div>
             <input type="file" id="item_img" name="item_img[]" accept="image/*" multiple onchange="setPreviewImage(event);"/>
         </div>
@@ -138,21 +142,23 @@ END;
     var fileNameCheck = /((\.php)|(\%)|(\.asp)|(\.jsp)|(\.\.)|(\/)|(\\)|(\?)|(\&))+/img;
 
     var tagCount = 1;
+    var delCount = 0;
 
     function setPreviewImage(event){
 
-        $(".preview").children("img").remove();
+        $(".preview").children(".preview_img").remove();
 
         //file number check
         var maxfile = 4;
-        var fileNumber = $("#item_img")[0].files.length;
-        if(fileNumber>maxfile){
+        var fileNumber = $("#item_img")[0].files.length + $(".prev_img").length;
+        console.log(fileNumber);
+        if(fileNumber>=maxfile){
             alert("error-file-number: file number is must lower than 4");
             $("#item_img").val(null);
             return 0;
         }
 
-        for (var i = 0; i < fileNumber; i++){
+        for (var i = 0; i < $("#item_img")[0].files.length; i++){
             var reader = new FileReader();
             //file size check
             var maxSize = 5*1024*1000;//5MB
@@ -160,7 +166,7 @@ END;
             if(fileSize>maxSize){
                 alert("error-file-size: file size is must lower than 5MB");
                 $("#item_img").val(null);
-                $(".preview").children("img").remove();
+                $(".preview").children(".preview_img").remove();
                 return 0;
             }
 
@@ -169,17 +175,31 @@ END;
             if(fileNameCheck.test(fileName)||RegExpJS.test(fileName)||(!imgCheck.test(fileName))){
                     alert("Filename is not allowed.");
                     $("#item_img").val(null);
-                    $(".preview").children("img").remove();
+                    $(".preview").children(".preview_img").remove();
                     return 0;
             }
             reader.onload = function(event) {
                     var img = document.createElement("img");
+                    img.setAttribute("class", "preview_img");
                     img.setAttribute("src", event.target.result);
                     $(".preview").append(img);
             };
 
             reader.readAsDataURL(event.target.files[i]);
         }
+    }
+    $(".img_delete").click(function(){
+        deleteImg(this);
+    })
+
+    function deleteImg(obj){
+        var delBox = document.createElement("input");
+        delBox.setAttribute("type", "hidden");
+        delBox.setAttribute("name","del_img[]");
+        delBox.setAttribute("value", $(obj).prev().attr("img_id"));
+        $(".register-box").append(delBox);
+
+        $(obj).parents(".saved_img").remove();
     }
 
     function addTag(){
