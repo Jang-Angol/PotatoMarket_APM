@@ -18,9 +18,9 @@
     include "./database.php";
 
 	//POST VALUE CHECK
-	foreach ($_POST as $key => $value) {
+	/*foreach ($_POST as $key => $value) {
 		echo $key . " : " . $value . "<br>";
-	}
+	}*/
 	$trade_type = $_POST["trade_type"];
 	$server = $_POST["server"];
 	$title = $_POST["title"];
@@ -61,9 +61,9 @@
 	*/
 
 	$sql = "INSERT INTO ITEM_TB(user_no,trade_type,server,title,price,item_desc,date) VALUES(".$_SESSION["user_no"].", ".$trade_type.", ".$server.", '".$title."', '".$price."', '".$item_desc."', '".$time."');";
-	var_dump($sql);
+	//var_dump($sql);
 	$result = mysqli_query($connect, $sql);
-	var_dump($result);
+	//var_dump($result);
 	if($result){
 		echo "Success!";
 		$item_no = mysqli_insert_id($connect);
@@ -101,7 +101,7 @@
 		exit();
 	}
 
-	if (!isset($_FILES['item_img'])||($_FILES['item_img']['size'][0]==0)){
+	if (empty($_FILES['item_img'])){
 		echo "File is none<br>";
 
 	} else {

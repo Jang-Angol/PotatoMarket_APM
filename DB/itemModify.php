@@ -116,12 +116,8 @@
 		}
 
 		//UPDATE IMG
-		if (empty($_FILES['item_img'])){
+		if (empty($_FILES['item_img'])||(!isset($_FILES['itm_img']))){
 			echo "File is none<br>";
-			var_dump(isset($_FILES['item_img']));
-			var_dump($_FILES['item_img']);
-			var_dump(($_FILES['item_img']['size'][0]==0));
-
 		} else {
 			//IMG UPLOAD
 			// 설정
@@ -137,8 +133,6 @@
 				$error = $_FILES['item_img']['error'][$f];
 				$name = $_FILES['item_img']['name'][$f];
 				$ext = array_pop(explode('.', $name));
-				var_dump($name);
-				var_dump($ext);
 				// 오류 확인
 				if( $error != UPLOAD_ERR_OK ) {
 					switch( $error ) {

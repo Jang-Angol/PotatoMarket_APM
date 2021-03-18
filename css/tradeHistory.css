@@ -154,3 +154,21 @@
     color: #FFB950;
     font-weight: 600;
 }
+/* bottom bar */
+ .contents_bottom_bar{
+    text-align: center;
+ }
+ .contents_bottom_bar .page{
+    margin-left: 10px;
+    margin-right: 10px;
+ }
+ .contents_bottom_bar button{
+    float: right;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: none;
+    color: #F4F4F2;
+    background-color: #FFB950;
+ }

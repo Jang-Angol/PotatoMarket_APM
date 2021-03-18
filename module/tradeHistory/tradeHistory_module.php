@@ -1,3 +1,6 @@
+<?php
+    include "./DB/database.php";
+?>
 <div class="banner">
 	<img src="../img/trade.jpg"/>
 </div>
@@ -11,36 +14,46 @@
 	        <li><a>거래완료</a></li>
 	    </ul>
 	</div>
-	<div class="trade_history_table">
-	    <table>
-	        <tbody>
 <?php
-	include "./DB/database.php";
+	$item_count = 8;
+	$page = isset($_GET["page"]) ? intval($_GET["page"]) : 1;
+	$offset = ($page-1)*$item_count;
 
-	$sql = "SELECT no, trade_type, trade_state, title, server, price, date FROM ITEM_TB ORDER BY no DESC LIMIT 10;";
-	$result = mysqli_query($connect, $sql);
-	while($row = mysqli_fetch_array($result)){
-	switch($row["trade_type"]){
-		case 1:
-			$type = "Sell";
-			break;
-		case 2:
-			$type = "Buy";
-			break;
-		default:
-			exit;
-	}
-	echo<<<END
-		<tr><td class="trade_item_state_$row[trade_type]$row[trade_state]"></td><td class="server_icon_$row[server]"></td><td class="trade_title"><a href="item{$type}View.php?id=$row[no]">$row[title]</a></td><td class="trade_price">$row[price]</td><td class="trade_time">$row[date]</td></tr>
+	if(!isset($_GET["p_search"])){
+        $sql = "SELECT no, trade_type, trade_state, title, server, price, date FROM ITEM_TB ORDER BY no DESC LIMIT $offset, $item_count;";
+        $count_sql = "SELECT COUNT(*) as item_count FROM ITEM_TB;";
+    } else {
+    	if(preg_match("/[^a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ\,\.\?\!\(\)\s]/", $_GET["p_search"])){
+    		echo "<script>alert('올바르지 않은 Data 입니다.');
+					history.back();</script>";
+    	} else {
+    		$sql = "SELECT no, trade_type, trade_state, server, title, price, date FROM ITEM_TB WHERE title LIKE '%$_GET[p_search]%' ORDER BY no DESC LIMIT $offset, $item_count;";
+        	$count_sql = "SELECT COUNT(*) as item_count FROM ITEM_TB WHERE title LIKE '%$_GET[p_search]%';";
+    	}        
+    }
 
-END;
-	}
-	mysqli_close($connect);
+	$count_result = mysqli_query($connect, $count_sql);
+	$count_row = mysqli_fetch_array($count_result);
+	$item_count = $count_row["item_count"];
 
+	$pages = $item_count/8 + 1;
+
+	include "./module/tradeHistory/tradeHistoryTable_module.php";
 ?>
-	        </tbody>
-	    </table>
-	</div>
+	<div class="contents_bottom_bar">
+    	<?php
+    		echo "<span class='pages'>";
+    		for ($i = 1; $i < $pages; $i++){
+    			if(isset($_GET["p_search"])){
+    				echo "<span><a class='page' href='tradeHistory.php?p_search=$_GET[p_search]&page=$i'>$i</a></span>";
+    			} else {
+    				echo "<span><a class='page' href='tradeHistory.php?page=$i'>$i</a></span>";
+    			}
+    		}
+    		echo "</span>";
+
+    	?>
+    </div>
 </div>
 <script>
 	$(".category_bar > ul > li").click(function(){

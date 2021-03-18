@@ -62,7 +62,7 @@ _END;
 </header>
 <script>
     //search check
-    var searchCheck = /[^a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ\,\.\?\!\(\)]/;
+    var searchCheck = /[^a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ\,\.\?\!\(\)\s]/;
     function searchChk(){
         if($("#header_search").val()==""){
             alert("검색창에 값을 입력해주세요.");
@@ -72,7 +72,7 @@ _END;
                 alert("not valid input");
                 return false;
             } else{
-                alert("success");
+                //alert("success");
                 return true;
             }
         }
