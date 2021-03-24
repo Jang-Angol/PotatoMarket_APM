@@ -35,8 +35,8 @@
     transition: 0ms;
 }
 .mypage_nav .submenu{
-    padding-left: 10px;
     display: none;
+    font-size: 16px;
 }
 .mypage_nav .submenu li{
     border: none;

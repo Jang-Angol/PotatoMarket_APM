@@ -105,7 +105,7 @@ END;
 					$trade_state = "예약신청<br>(".$trade_row["reservation_date"].")";
 				}
 			}
-			if(isset($_SESSION["user_no"])&&($_SESSION["user_no"]==$trade_row["apply_user_no"])){
+			if(isset($_SESSION["user_no"])&&($_SESSION["user_no"]==$trade_row["apply_user_no"])&&($row["trade_state"]!=3)){
 				$trade_state = $trade_state." <a class='apply-delete'>(X)</a>";
 			}
 			echo"<tr id='$trade_row[no]'><td><span>$trade_state</span></td>

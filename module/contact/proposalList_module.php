@@ -1,7 +1,7 @@
 <?php
     include"../../DB/database.php";
 
-    $sql = "SELECT * FROM PROPOSAL_TB ORDER BY no DESC LIMIT 8;";
+    $sql = "SELECT * FROM PROPOSAL_TB ORDER BY no DESC;";
     $result = mysqli_query($connect, $sql);
     while($row = mysqli_fetch_array($result)){
     	$user_sql = "SELECT server, user_name FROM USER_TB WHERE no = $row[user_no];";
@@ -16,10 +16,5 @@
 	    </div>    
 END;
     }
-    	echo<<<END
-    	<div class="paging">
-	        < 1 2 3 4 5 >
-	    </div>
-END;
     mysqli_close($connect);
 ?>

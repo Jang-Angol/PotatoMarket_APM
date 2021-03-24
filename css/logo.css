@@ -97,3 +97,26 @@
     color:#BBBFCA;
     font-weight: bold;
 }
+.trade_apply_state_02:after{
+    content:"[판매신청]";
+    font-weight: bold;
+ }
+.trade_apply_state_01:after{
+    content:"[구매신청]";
+    font-weight: bold;
+}
+.trade_apply_state_03:after{
+    content:"[예약신청]";
+    color: green;
+    font-weight: bold;
+}
+.trade_apply_state_11:after, .trade_apply_state_12:after{
+    content:"[거래수락]";
+    color:#BBBFCA;
+    font-weight: bold;
+}
+.trade_apply_state_13:after{
+    content:"[예약수락]";
+    color:#BBBFCA;
+    font-weight: bold;
+}
