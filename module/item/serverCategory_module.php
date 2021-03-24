@@ -11,7 +11,7 @@
     </div>
 </div>
 <?php
-    if(!isset($_GET["server"])){
+    if(empty($_GET["server"])){
         echo "<script>$('.category_all').addClass('current');</script>";
     }
 ?>

@@ -104,9 +104,7 @@ END;
                     </tr>
                     <tr>
                         <th>설명</th>
-                        <td><pre>
-                            {$item_desc}
-                        </pre></td>
+                        <td><pre>{$item_desc}</pre></td>
                     </tr>
                     <tr>
                         <th>검색 태그</th>

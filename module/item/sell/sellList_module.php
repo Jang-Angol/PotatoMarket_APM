@@ -7,6 +7,7 @@
     if(!isset($sql)){
         $sql = "SELECT no, trade_type, trade_state, server, title, price FROM ITEM_TB WHERE trade_type = 1 ORDER BY no DESC LIMIT 8;";
     }
+    //var_dump($sql);
     
     $result = mysqli_query($connect, $sql);
     // GET ITEM INFO
