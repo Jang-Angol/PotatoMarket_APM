@@ -19,7 +19,7 @@
                         <option value="4">부적절한 게시물</option>
                     </select>
                 </span>
-                <span><input type="text" class="form-control" name="title" placeholder="제목을 입력해주세요."></span>
+                <span><input type="text" class="report-title form-control" name="title" placeholder="제목을 입력해주세요."></span>
             </div>
             <div class="register-table">
                 <table>
@@ -32,7 +32,7 @@
             </div>
         </div>
         <div class="report_button">
-            <button type="button">신고하기</button>
+            <button type="submit">신고하기</button>
         </div>
     </form>
 </div>
@@ -59,14 +59,14 @@
     var sqlProtect = /[\'\"\;\\\#\=\&]/g;
 
     function reportCheck(){
-        //server check
-        if($(".server-select").val()==""){
-            console.log("error-server");
-            alert("서버를 골라주세요.");
+        //category check
+        if($(".category-select").val()==""){
+            console.log("error-category");
+            alert("카테고리를 골라주세요.");
             return false;
         }
         //title check
-        if($("#item-name").val()==""){
+        if($(".report-title").val()==""){
             console.log("error-title-blink");
             alert("제목을 입력해주세요.");
             return false;
@@ -76,44 +76,19 @@
                 return false;
             }
         }
-
-        
-        if($("#price").val()==""){
-            console.log("error-price-blink");
-            alert("가격을 입력해주세요.");
+        //content check
+        if(RegExpJS.test($("#item-desc").val())||sqlProtect.test($("#item-desc").val())){
+            console.log("error-content");
+            alert("허용되지 않는 양식입니다.");
             return false;
-        } else if($("#price").val().indexOf(0) == 0){
-            console.log("not valid price");
-            alert("0으로 시작하는 가격은 입력할 수 없습니다.");
-            return false;
-        } else {
-            if($("#price").val().length>11){
-                alert("가격은 최대 999억까지 가능합니다.");
+        }
+        //link check
+        if($("#report_link").val()!=""){
+            if(RegExpJS.test($("#report_link").val())){
+                console.log("error-link");
+                alert("허용되지 않는 양식입니다.");
                 return false;
             }
-        }
-        //opt check
-        if(optionCheck.test($("#item_opt1").val())||optionCheck.test($("#item_opt2").val())||optionCheck.test($("#item_opt3").val())){
-            console.log("error-option");
-            alert("허용되지 않는 양식입니다.");
-            return false;
-        }
-        //desc check
-        if(RegExpJS.test($("#item-desc").val())||sqlProtect.test($("#item-desc").val())){
-            console.log("error-desc");
-            alert("허용되지 않는 양식입니다.");
-            return false;
-        }
-        //tag check
-        var tagResult = true;
-        $(".item-tag > span").children("input").each(function(){
-            if(tagCheck.test($(this).val())){tagResult=false; return false;}
-        });
-
-        if(!tagResult){
-            console.log("error-tag");
-            alert("허용되지 않는 양식입니다.");
-            return false;
         }
 
         return true;

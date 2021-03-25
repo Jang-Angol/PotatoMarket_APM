@@ -54,6 +54,7 @@ END;
 END;
         }
     }
+    mysqli_close($connect);
 ?>
         </tbody>
     </table>

@@ -129,7 +129,7 @@
 			}
 
 			//UPDATE IMG
-			if (empty($_FILES['item_img'])||(!isset($_FILES['itm_img']))){
+			if (empty($_FILES['item_img'])||($_FILES['item_img']['size'] == 0)){
 				echo "File is none<br>";
 			} else {
 				//IMG UPLOAD
@@ -155,6 +155,8 @@
 								break;
 							case UPLOAD_ERR_NO_FILE:
 								echo "파일이 첨부되지 않았습니다. ($error)";
+								echo "<script>alert('Complete Modify!!');
+									window.location.href='/item$trade_type.php';</script>";
 								break;
 							default:
 								echo "파일이 제대로 업로드되지 않았습니다. ($error)";

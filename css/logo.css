@@ -1,4 +1,4 @@
-/* logo */
+/* SERVER */
 .server_icon_0::before{
     content:"Dev";
     font-size: 12px;
@@ -79,6 +79,7 @@
     border-radius: 20%;
     padding: 3px;
  }
+ /*TRADE ITEM STATE*/
  .trade_item_state_11:after{
     content:"[판매중]";
     font-weight: bold;
@@ -97,6 +98,7 @@
     color:#BBBFCA;
     font-weight: bold;
 }
+/*TRADE APPLY STATE*/
 .trade_apply_state_02:after{
     content:"[판매신청]";
     font-weight: bold;

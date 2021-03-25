@@ -1,7 +1,7 @@
 <?php
-	error_reporting(E_ALL);
+/*	error_reporting(E_ALL);
     ini_set("display_errors", 1);
-
+*/
     session_start();
 
     if(!isset($_SESSION["user_no"])){
@@ -17,84 +17,62 @@
 		echo $key . " : " . $value . "<br>";
 	}*/
 
-	$trade_type = $_POST["trade_type"];
-	$server = $_POST["server"];
+	
+
+	$user_no = $_SESSION["user_no"];
+	$category = $_POST["category"];
 	$title = $_POST["title"];
-	$price = $_POST["price"];
-	$item_desc = $_POST["item_desc"];
+	$content = $_POST["content"];
+	if(isset($_POST["link"])){
+		$link = $_POST["link"];
+	}
 	$time = date("Y-m-d H:i:s");
 
-
 	$titleCheck = preg_match("/^[a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ\,\.\?\!\(\)\s]*$/", $title);
-	$RegExpJs = preg_match("/<script[^>]*>((\n|\r|.)*?)<\/script>/im", $item_desc);
-	$sqlProtect = preg_match("/[\'\"\;\\\#\=\&]/", $item_desc);
+	$RegExpJs = preg_match("/<script[^>]*>((\n|\r|.)*?)<\/script>/im", $content);
+	$sqlProtect = preg_match("/[\'\"\;\\\#\=\&]/", $content);
 
 	/*var_dump($titleCheck);
-	var_dump($optCheck);
-	var_dump($tagCheck);
-	var_dump($priceCheck);
 	var_dump($RegExpJs);
 	var_dump($sqlProtect);*/
 
-	if($titleCheck&&$optCheck&&$tagCheck&&$priceCheck&&(!$RegExpJs)&&(!$sqlProtect)){
-		$sql = "INSERT INTO ITEM_TB(user_no,trade_type,server,title,price,item_desc,date) VALUES(".$_SESSION["user_no"].", ".$trade_type.", ".$server.", '".$title."', ".$price.", '".$item_desc."', '".$time."');";
+	if($titleCheck&&(!$RegExpJs)&&(!$sqlProtect)){
+		if(isset($link)){
+			$sql = "INSERT INTO REPORT_TB(user_no, category, title, content, link) VALUES($user_no, $category, '$title', '$content', '$link');";
+		} else {
+			$sql = "INSERT INTO REPORT_TB(user_no,category,title,content) VALUES($user_no, $category, '$title', '$content');";
+		}
 		//var_dump($sql);
 		$result = mysqli_query($connect, $sql);
 		//var_dump($result);
 		if($result){
-			echo "Success!";
-			$item_no = mysqli_insert_id($connect);
-			if(count($opt)>0){
-				foreach($opt as $key => $value){
-					$sql = "INSERT INTO ITEM_OPT_TB(item_no,opt) VALUES(".$item_no.", '".$value."');";
-					$result = mysqli_query($connect, $sql);
-					if(!$result){
-						echo "Item_opt error<br>";
-						exit();
-						echo "<script>alert('올바르지 않은 Data 입니다.');
-						history.back();</script>";
-						exit();
-					}
-				}
-			}
-			if(count($tag)>0){
-				foreach($tag as $key => $value){
-					$sql = "INSERT INTO ITEM_TAG_TB(item_no,item_tag) VALUES(".$item_no.", '".$value."');";
-					$result = mysqli_query($connect, $sql);
-					if(!$result){
-						echo "Item_tag error<br>";
-						exit();
-						echo "<script>alert('올바르지 않은 Data 입니다.');
-						history.back();</script>";
-						exit();
-					}
-				}
-			}
+			//echo "Success!";
+			$report_no = mysqli_insert_id($connect);
 		} else {
 			echo "fail!";
 			exit();
 			echo "<script>alert('올바르지 않은 Data 입니다.');
-			history.back();</script>";
+				history.back();</script>";
 			exit();
 		}
 
-		if (empty($_FILES['item_img'])){
-			echo "File is none<br>";
+		if (empty($_FILES['report_img'])||(!isset($_FILES['report_img']))){
+			//echo "File is none<br>";
 
 		} else {
 			//IMG UPLOAD
 			// 설정
-			$upload_dir = '../upload/'.$_SESSION["user_no"];
+			$upload_dir = '../report/'.$_SESSION["user_no"];
 			if(!is_dir($upload_dir)){
 				mkdir($upload_dir,0757,true);
 			}
 			$allowed_ext = array('jpg','jpeg','png','gif', 'jfif', 'bmp');
 			
-			foreach ($_FILES['item_img']['name'] as $f => $name) {   
+			foreach ($_FILES['report_img']['name'] as $f => $name) {   
 
 				// 변수 정리
-				$error = $_FILES['item_img']['error'][$f];
-				$name = strtolower($_FILES['item_img']['name'][$f]);
+				$error = $_FILES['report_img']['error'][$f];
+				$name = strtolower($_FILES['report_img']['name'][$f]);
 				$ext = array_pop(explode('.', $name));
 				 
 				// 오류 확인
@@ -106,6 +84,8 @@
 							break;
 						case UPLOAD_ERR_NO_FILE:
 							echo "파일이 첨부되지 않았습니다. ($error)";
+							echo "<script>alert('Success!!');
+								history.back();</script>";
 							break;
 						default:
 							echo "파일이 제대로 업로드되지 않았습니다. ($error)";
@@ -123,12 +103,12 @@
 				$fileName = $f.substr(base64_encode($title),0,10).$time.'.'.$ext;
 				 
 				// 파일 이동
-			    if(move_uploaded_file($_FILES['item_img']['tmp_name'][$f], "$upload_dir/$fileName")){
+			    if(move_uploaded_file($_FILES['report_img']['tmp_name'][$f], "$upload_dir/$fileName")){
 			        
-			        echo 'success';
+			        //echo 'success';
 
 			        // save src to DB
-			        $sql = "INSERT INTO ITEM_IMG_TB(item_no,img_src) VALUES(".$item_no.", '".substr($upload_dir,2)."/".$fileName."');";
+			        $sql = "INSERT INTO REPORT_IMG_TB(report_no,img_src) VALUES(".$report_no.", '".substr($upload_dir,2)."/".$fileName."');";
 			        $result = mysqli_query($connect, $sql);
 			        if(!$result){
 			        	echo "IMG UPLOAD ERROR";
@@ -151,15 +131,11 @@
 				/*history.back();*/</script>";
 	}
 	
+	echo "<script>alert('Success!!');
+				history.back();</script>";
 
 
 	mysqli_close($connect);
-
-	if($trade_type == 1){
-		//header("Location: /itemSell.php");
-	} elseif ($trade_type ==2) {
-		//header("Location: /itemBuy.php");
-	}
 	
 
 ?>

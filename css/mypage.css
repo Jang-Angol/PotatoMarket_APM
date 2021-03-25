@@ -9,6 +9,7 @@
     min-width: 200px;
     height: 100%;
     z-index: 500;
+    padding-bottom: 40vh;
     border-top: 2px solid #FFB950;
     border-right: 2px solid #D3CDC2;
     background-color: #FFFFFf;
@@ -154,15 +155,19 @@
     padding-top: 5px;
     padding-bottom: 5px;
 }
+.report_table .report_blink{
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
 .report_table .report_category{
-    width: 15%;
+    width: 20%;
 }
 td.report_category{
     color: red;
     font-weight: 500;
 }
 .report_content{
-    width: 55%;
+    width: 50%;
 }
 .report_date{
     width: 15%;

@@ -120,7 +120,7 @@
 			exit();
 		}
 
-		if (empty($_FILES['item_img'])){
+		if (empty($_FILES['item_img'])||(!isset($_FILES['item_img']))){
 			echo "File is none<br>";
 
 		} else {
@@ -148,6 +148,11 @@
 							break;
 						case UPLOAD_ERR_NO_FILE:
 							echo "파일이 첨부되지 않았습니다. ($error)";
+							if($trade_type == 1){
+								header("Location: /itemSell.php");
+							} elseif ($trade_type ==2) {
+								header("Location: /itemBuy.php");
+							}
 							break;
 						default:
 							echo "파일이 제대로 업로드되지 않았습니다. ($error)";
@@ -198,9 +203,9 @@
 	mysqli_close($connect);
 
 	if($trade_type == 1){
-		//header("Location: /itemSell.php");
+		header("Location: /itemSell.php");
 	} elseif ($trade_type ==2) {
-		//header("Location: /itemBuy.php");
+		header("Location: /itemBuy.php");
 	}
 	
 

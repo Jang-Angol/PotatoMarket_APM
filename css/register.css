@@ -24,15 +24,29 @@
 .user-register td{
 	padding: 10px 0px 10px;
 }
-#user_id, #user_pw, #user_pw_check{
+#user_id{
+	width: 225px;
+}
+#user_id{
+	display: inline-block;
+}
+#user_pw, #user_pw_check{
 	width: 300px;
+}
+.double_check{
+	width: 75px;
+	height: 38px;
+	font-weight: 400;
+	background-color: #FFFFFF;
+	border: 1px solid #ced4da;
+	border-radius: 0.25rem;
 }
 .server-select{
     width: 80px;
     display: inline-block;
 }
 #user_name{
-    width: 220px;
+    width: 138px;
     display: inline-block;
 }
 .phonenumber{
@@ -108,4 +122,7 @@
 	padding-right: 10px;
 	color: red;
 	font-size: 12px;
+}
+#usable_id td, #usable_user_name td{
+	color: green;
 }

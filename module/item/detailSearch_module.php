@@ -1,5 +1,5 @@
 <div class="modal">
-    <form method="get" name="detail_search" action="itemSell.php" onsubmit="return detailSearchCheck();">
+    <form method="get" name="detail_search" action='<?php echo "$_SERVER[PHP_SELF]"?>' onsubmit="return detailSearchCheck();">
         <table class="search_table">
             <tbody>
                 <tr><th>서버</th><td><select id="server" name="server">

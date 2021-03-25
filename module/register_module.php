@@ -4,7 +4,9 @@
         <form method="post" id="registerForm" name="registerForm" action="DB/register.php" onsubmit="return registerChk();">
             <table class="info-list">
                 <tr><th>ID</th></tr>
-                <tr><td><span><input id="user_id" name="id" type="text" class="form-control" placeholder="아이디" minlength="8" name="pw" maxlength="20"></span></td></tr>
+                <tr><td><span><input id="user_id" name="id" type="text" class="form-control" placeholder="아이디" minlength="8" name="pw" maxlength="20"></span><span><button id="id_double_check" class="double_check" type="button">중복확인</button></span></td></tr>
+                <tr id="usable_id" class="register_error"><td><span>사용가능한 아이디입니다.</span></td></tr>
+                <tr id="double_id" class="register_error"><td><span>중복되는 아이디입니다.</span></td></tr>
                 <tr id="error_id" class="register_error"><td><span>아이디는 영문 8~20자로 입력해주세요.</span></td></tr>
                 <tr id="id_blink" class="register_error"><td><span>아이디를 입력해주세요.</span></td></tr>
                 <tr><th>PW</th></tr>
@@ -28,8 +30,11 @@
                             </select>
                         </span>
                         <span><input id="user_name" name="userName" type="text" class="form-control" maxlength="12" placeholder="캐릭터명"></span>
+                        <span><button id="user_name_double_check" class="double_check" type="button">중복확인</button></span>
                     </td>
                 </tr>
+                <tr id="usable_user_name" class="register_error"><td><span>사용가능한 닉네임입니다.</span></td></tr>
+                <tr id="double_user_name" class="register_error"><td><span>중복되는 닉네임입니다.</span></td></tr>
                 <tr id="error_user_name" class="register_error"><td><span>올바르지 않은 닉네임입니다.</span></td></tr>
                 <tr id="user_server_blink" class="register_error"><td><span>서버를 선택해주세요.</span></td></tr>
                 <tr id="user_name_blink" class="register_error"><td><span>닉네임을 입력해주세요.</span></td></tr>
@@ -133,6 +138,8 @@
     function idCheck(){
         $("#id_blink").css("display","none");
         $("#error_id").css("display","none");
+        $("#double_id").css("display","none");
+        $("#usable_id").css("display","none");
         //ID check
         if($("#user_id").val()==""){
             $("#id_blink").css("display","block");
@@ -143,6 +150,46 @@
                 return false;
             }
         }
+
+        return true;
+    }
+
+    function idDoubleCheck(){
+        $("#id_blink").css("display","none");
+        $("#error_id").css("display","none");
+        $("#double_id").css("display","none");
+        $("#usable_id").css("display","none");
+
+        if($("#user_id").val()==""){
+            $("#id_blink").css("display","block");
+            return false;
+        } else{
+            if(!useridCheck.test($("#user_id").val())){
+                $("#error_id").css("display","block");
+                return false;
+            }
+        }
+        var hiddenForm = document.createElement("form");
+        hiddenForm.setAttribute("method", "post");
+        $("<input></input>").attr({type:"hidden", name:"user_id", value:$("#user_id").val()}).appendTo(hiddenForm);
+        var data = $(hiddenForm).serialize();
+        var result;
+        $.ajax({
+            type: "post",
+            url: "DB/idDoubleCheck.php",
+            data: data,
+            async: false,
+            success : function connect(a){
+                if(a == 'true'){
+                    $("#usable_id").css("display","block");
+                } else {
+                    $("#double_id").css("display","block");
+                    result = false;
+                }
+            },
+            error : function error(){alert("error");}
+        });
+        return result;
     }
 
     function pwCheck(){
@@ -181,6 +228,8 @@
         $("#user_server_blink").css("display","none");
         $("#user_name_blink").css("display","none");
         $("#error_user_name").css("display","none");
+        $("#double_user_name").css("display","none");
+        $("#usable_user_name").css("display","none");
 
         //USER SERVER check
         if($("#user_server").val()==""){
@@ -198,6 +247,54 @@
                 return false;
             }
         }
+    }
+
+    function userNameDoubleCheck(){
+        $("#user_server_blink").css("display","none");
+        $("#user_name_blink").css("display","none");
+        $("#error_user_name").css("display","none");
+        $("#double_user_name").css("display","none");
+        $("#usable_user_name").css("display","none");
+
+        //USER SERVER check
+        if($("#user_server").val()==""){
+            $("#user_server_blink").css("display","block");
+            return false;
+        }
+
+        //USER NAME check
+        if($("#user_name").val()==""){
+            $("#user_name_blink").css("display","block");
+            return false;
+        } else{
+            if(!(userNameCheckKor.test($("#user_name").val())||userNameCheckEng.test($("#user_name").val()))){
+                $("#error_user_name").css("display","block");
+                return false;
+            }
+        }
+        var hiddenForm = document.createElement("form");
+        hiddenForm.setAttribute("method", "post");
+        $("<input></input>").attr({type:"hidden", name:"user_name", value:$("#user_name").val()}).appendTo(hiddenForm);
+        $("<input></input>").attr({type:"hidden", name:"user_server", value:$("#user_server").val()}).appendTo(hiddenForm);
+        var data = $(hiddenForm).serialize();
+        var result;
+        $.ajax({
+            type: "post",
+            url: "DB/userNameDoubleCheck.php",
+            data: data,
+            async: false,
+            success : function connect(a){
+                if(a == 'true'){
+                    $("#usable_user_name").css("display","block");
+                } else {
+                    $("#double_user_name").css("display","block");
+                    result = false;
+                }
+            },
+            error : function error(){alert("error");}
+        })
+
+        return result;
     }
 
     function phoneNumCheck(){
@@ -238,6 +335,10 @@
         idCheck();
     });
 
+    $("#id_double_check").click(function(){
+        idDoubleCheck();
+    });
+
     $("#user_pw").keyup(function(){
         pwCheck();
     });
@@ -248,6 +349,10 @@
 
     $("#user_name").keyup(function(){
         userNameCheck();
+    });
+
+    $("#user_name_double_check").click(function(){
+        userNameDoubleCheck();
     });
 
     $("#phonenumber_head").keyup(function(){
@@ -270,23 +375,44 @@
         let success = true;
 
         //ID check
-        success = idCheck();
+        if(idCheck() == false){
+            success = false;
+        }
 
+        //ID double check
+        if(idDoubleCheck() == false){
+            success = false;
+        }
 
         //PW check
-        success = pwCheck();
+        if(pwCheck() == false){
+            success = false;
+        }
 
         //PW CHECK check
-        success = pwCheckCheck();
+        if(pwCheckCheck() == false){
+            success = false;
+        }
 
-        //USER SERVER check
-        success = userNameCheck();
+        //USER SERVER, NAME check
+        if(userNameCheck() == false){
+            success = false;
+        }
+
+        //USER NAME double check
+        if(userNameDoubleCheck() == false){
+            success = false;
+        }
 
         //PHONE NUMBER check
-        success = phoneNumCheck();
+        if(phoneNumCheck() == false){
+            success = false;
+        }
 
         //EMAIL check
-        success = email_Check();
+        if(email_Check() == false){
+            success = false;
+        }
 
         return success;
 
