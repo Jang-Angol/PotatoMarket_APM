@@ -10,8 +10,8 @@
     //var_dump($sql);
     
     $result = mysqli_query($connect, $sql);
-    // GET ITEM INFO
-    while($row = mysqli_fetch_array($result)){
+    if($row = mysqli_fetch_array($result)){
+        // GET ITEM INFO
         // GET IMG SRC
         $img_sql = "SELECT img_src FROM ITEM_IMG_TB WHERE item_no = ".$row["no"].";";
         $img_result = mysqli_query($connect, $img_sql);
@@ -50,7 +50,50 @@ echo<<<END
             </a>
         </div>
 END;
+        while($row = mysqli_fetch_array($result)){
+            // GET IMG SRC
+            $img_sql = "SELECT img_src FROM ITEM_IMG_TB WHERE item_no = ".$row["no"].";";
+            $img_result = mysqli_query($connect, $img_sql);
+            $img_row = mysqli_fetch_array($img_result);
+            if($img_row){
+                $img_src = $img_row["img_src"];
+            } else {
+                $img_src = "img/fashion3.jpg";
+            }
+            // GET OPT INFO
+            $opt_sql = "SELECT opt FROM ITEM_OPT_TB WHERE item_no = ".$row["no"].";";
+            $opt_result = mysqli_query($connect, $opt_sql);
+            $opt = [] ;
+            while($opt_row = mysqli_fetch_array($opt_result)){
+                array_push($opt, $opt_row["opt"]);
+            }
+
+echo<<<END
+        <div class="list_item card mb-3 col-4 col-lg-3">
+            <a href="itemSellView.php?id=$row[no]">
+                <div class="card-header">
+                    <span class="trade_item_state_$row[trade_type]$row[trade_state]"></span>
+                </div>
+                <div class="item_name server_icon_$row[server]"><span>$row[title]</span></div>
+                <div class="card_img"><img class="item_img" src="$img_src"/></div>
+                <div class="card-body">
+                    <div class="card-title"><span class="item_price">$row[price]</span></div>
+                    <div class="card-text">
+END;
+                        foreach($opt as $value){
+                            echo "<span class='item_opt'>".$value."</span>";
+                        }
+echo<<<END
+                    </div>
+                </div>
+            </a>
+        </div>
+END;
+        }
+    } else {
+        echo "</div><div class='item_list_blink'>등록된 아이템이 없습니다";
     }
+    
     mysqli_close($connect);
     unset($sql);
 ?>

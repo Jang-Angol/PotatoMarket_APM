@@ -23,6 +23,15 @@
         $(this).parent("li").addClass("current");
     });
 
+    $("#sellHistory").click(function(){
+        $(".mypage_nav > ul > li").removeClass("current");
+        $(".main_menu").addClass("current");
+    });
+    $("#buyHistory").click(function(){
+        $(".mypage_nav > ul > li").removeClass("current");
+        $(".main_menu").addClass("current");
+    });
+
     $(document).ready(function(){
         $.ajax({
             type: "post",

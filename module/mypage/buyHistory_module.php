@@ -47,10 +47,17 @@ END;
         }
         
         $result = mysqli_query($connect, $sql);
-        while($row = mysqli_fetch_array($result)){
+        if($row = mysqli_fetch_array($result)){
             echo<<<END
             <tr><td class="trade_apply_state_$row[apply_accept]$row[apply_state]"></td><td class="trade_ server server_icon_$row[server]"></td><td class="trade_title"><a href="itemSellView.php?id=$row[item_no]">$row[title]</a></td><td class="trade_price">$row[apply_price]</td><td class="trade_time">$row[date]</td></tr>
 END;
+            while($row = mysqli_fetch_array($result)){
+            echo<<<END
+            <tr><td class="trade_apply_state_$row[apply_accept]$row[apply_state]"></td><td class="trade_ server server_icon_$row[server]"></td><td class="trade_title"><a href="itemSellView.php?id=$row[item_no]">$row[title]</a></td><td class="trade_price">$row[apply_price]</td><td class="trade_time">$row[date]</td></tr>
+END;
+            }
+        } else {
+            echo "<div class='trade_history_blink'>신청한 내역이 없습니다</div>";
         }
     }
     mysqli_close($connect);

@@ -172,3 +172,9 @@
     color: #F4F4F2;
     background-color: #FFB950;
  }
+ .trade_history_blink, .warn_blink{
+    text-align: center;
+    font-weight: 600;
+    padding-top: 100px;
+    padding-bottom: 100px;
+ }
