@@ -16,9 +16,14 @@
     });
 
     $("#notice").click(function(){
+        var hiddenForm = document.createElement("form");
+        hiddenForm.setAttribute("method", "post");
+        $("<input></input>").attr({type:"hidden", name:"pages", value:"1"}).appendTo(hiddenForm);
+        var data = $(hiddenForm).serialize();
         $.ajax({
             type: "post",
             url: "module/contact/notice/noticeList_module.php",
+            data: data,
             success : function connect(a){
 
                 $("#contact_content").html(a); 

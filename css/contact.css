@@ -100,6 +100,7 @@
  .faq_content{
      display: none;
      padding-left: 110px;
+     padding-right: 20px;
      padding-top: 10px;
      padding-bottom: 10px;
      word-wrap: break-word;
@@ -118,6 +119,14 @@
     border: none;
     color: #F4F4F2;
     background-color: #FFB950;
+ }
+ .view_more{
+    margin-bottom: 1rem;
+    width: 100%;
+    padding: 10px;
+    font-weight: 600;
+    border: 1px solid rgba(0,0,0,0.125);
+    background-color: #FFFFFF;
  }
  /* notice */
  .notice{
@@ -151,4 +160,22 @@
     padding-left: 10px;
     padding-right: 20px;
     font-weight: 600;
+ }
+  /* bottom bar */
+ .contents_bottom_bar{
+    text-align: center;
+ }
+ .contents_bottom_bar .page{
+    margin-left: 10px;
+    margin-right: 10px;
+ }
+ .contents_bottom_bar button{
+    float: right;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: none;
+    color: #F4F4F2;
+    background-color: #FFB950;
  }

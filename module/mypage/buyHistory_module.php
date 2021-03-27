@@ -40,11 +40,23 @@ END;
         echo "<script>alert('로그인 후 이용이 가능합니다..');
             window.location.href='/login.php';</script>";
     } else {
+        $trade_count = 4;
+        $page = isset($_POST["page"]) ? intval($_POST["page"]) : 1;
+        $offset = ($page-1)*$trade_count;
+
         if(isset($_POST["apply_accept"])){
-            $sql = "SELECT TRADE_TB.no, TRADE_TB.apply_accept, TRADE_TB.apply_state, ITEM_TB.no as item_no, ITEM_TB.title, ITEM_TB.server, TRADE_TB.apply_price, TRADE_TB.date FROM TRADE_TB LEFT JOIN ITEM_TB ON TRADE_TB.item_no = ITEM_TB.no WHERE TRADE_TB.apply_user_no = $_SESSION[user_no] AND ITEM_TB.trade_type = 1 AND TRADE_TB.apply_accept = $_POST[apply_accept] ORDER BY no DESC;";
+            $sql = "SELECT TRADE_TB.no, TRADE_TB.apply_accept, TRADE_TB.apply_state, ITEM_TB.no as item_no, ITEM_TB.title, ITEM_TB.server, TRADE_TB.apply_price, TRADE_TB.date FROM TRADE_TB LEFT JOIN ITEM_TB ON TRADE_TB.item_no = ITEM_TB.no WHERE TRADE_TB.apply_user_no = $_SESSION[user_no] AND ITEM_TB.trade_type = 1 AND TRADE_TB.apply_accept = $_POST[apply_accept] ORDER BY no DESC LIMIT $offset, $trade_count;";
+            $count_sql = "SELECT COUNT(*) as trade_count FROM TRADE_TB LEFT JOIN ITEM_TB ON TRADE_TB.item_no = ITEM_TB.no WHERE TRADE_TB.apply_user_no = ".$_SESSION["user_no"]." AND ITEM_TB.trade_type = 1 AND TRADE_TB.apply_accept = $_POST[apply_accept];";
         } else {
-            $sql = "SELECT TRADE_TB.no, TRADE_TB.apply_accept, TRADE_TB.apply_state, ITEM_TB.no as item_no, ITEM_TB.title, ITEM_TB.server, TRADE_TB.apply_price, TRADE_TB.date FROM TRADE_TB LEFT JOIN ITEM_TB ON TRADE_TB.item_no = ITEM_TB.no WHERE TRADE_TB.apply_user_no = $_SESSION[user_no] AND ITEM_TB.trade_type = 1 ORDER BY no DESC;";
+            $sql = "SELECT TRADE_TB.no, TRADE_TB.apply_accept, TRADE_TB.apply_state, ITEM_TB.no as item_no, ITEM_TB.title, ITEM_TB.server, TRADE_TB.apply_price, TRADE_TB.date FROM TRADE_TB LEFT JOIN ITEM_TB ON TRADE_TB.item_no = ITEM_TB.no WHERE TRADE_TB.apply_user_no = $_SESSION[user_no] AND ITEM_TB.trade_type = 1 ORDER BY no DESC LIMIT $offset, $trade_count;";
+            $count_sql = "SELECT COUNT(*) as trade_count FROM TRADE_TB LEFT JOIN ITEM_TB ON TRADE_TB.item_no = ITEM_TB.no WHERE TRADE_TB.apply_user_no = ".$_SESSION["user_no"]." AND ITEM_TB.trade_type = 1;";
         }
+
+        $count_result = mysqli_query($connect, $count_sql);
+        $count_row = mysqli_fetch_array($count_result);
+        $trade_counts = $count_row["trade_count"];
+
+        $pages = $trade_counts/4 + 1;
         
         $result = mysqli_query($connect, $sql);
         if($row = mysqli_fetch_array($result)){
@@ -60,15 +72,49 @@ END;
             echo "<div class='trade_history_blink'>신청한 내역이 없습니다</div>";
         }
     }
-    mysqli_close($connect);
 ?>
         </tbody>
     </table>
+</div>
+<div class="contents_bottom_bar">
+    <?php
+        echo "<span class='pages'>";
+        for ($i = 1; $i < $pages; $i++){
+            echo "<span><a class='page' page_no='$i'>$i</a></span>";
+        }
+        echo "</span>";
+
+        mysqli_close($connect);
+    ?>
 </div>
 <script>
     $(".category_bar > ul > li").click(function(){
         $(".category_bar > ul > li").removeClass("current");
         $(this).addClass("current");
+    });
+
+    $(".page").click(function(){
+        var hiddenForm = document.createElement("form");
+        hiddenForm.setAttribute("method", "post");
+        var apply_accept = '<?php if(isset($_POST['apply_accept'])){echo $_POST['apply_accept'];} else {echo "2";}?>';
+        console.log(apply_accept);
+        $("<input></input>").attr({type:"hidden", name:"page", value:$(this).attr("page_no")}).appendTo(hiddenForm);
+        if(apply_accept!=2){
+            $("<input></input>").attr({type:"hidden", name:"apply_accept", value: apply_accept}).appendTo(hiddenForm);
+        }
+        
+        var data = $(hiddenForm).serialize();
+        $.ajax({
+            type: "post",
+            url: "module/mypage/buyHistory_module.php",
+            data: data,
+            success : function connect(a){
+
+                $("#mypage_content").html(a); 
+                
+            },
+            error : function error(){alert("error");}
+        });
     });
 
     $(".trade_price").each( function() {convertPrice(this)});

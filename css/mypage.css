@@ -9,6 +9,7 @@
     min-width: 200px;
     height: 100%;
     z-index: 500;
+    padding-top: 40px;
     padding-bottom: 40vh;
     border-top: 2px solid #FFB950;
     border-right: 2px solid #D3CDC2;
@@ -70,7 +71,6 @@
  }
  /* Warning */
  .warning_table{
-    margin-top: 30px;
     margin-left: 5%;
     margin-right: 5%;
     margin-bottom: 100px;
@@ -86,6 +86,12 @@
  .warning_table tr{
     width: 100%;
  }
+ .warning_table th{
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid#D3CDC2;
+}
  .warning_table td{
      text-align: center;
      padding-top: 10px;
@@ -97,6 +103,10 @@
  .warning_reason{
      width: 50%;
  }
+ .warning_table .warn_blink{
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
 /* ModifyInfo */
 .mypage_modify_info{
     margin-top: 30px;

@@ -1,5 +1,44 @@
 <?php
     session_start();
+
+    include "../../DB/database.php";
+
+    $trade_count = 4;
+    $page = isset($_POST["page"]) ? intval($_POST["page"]) : 1;
+    $offset = ($page-1)*$trade_count;
+
+    $count_sql = "SELECT COUNT(*) as trade_count FROM ITEM_TB WHERE user_no = ".$_SESSION["user_no"].";";
+
+    $count_result = mysqli_query($connect, $count_sql);
+    $count_row = mysqli_fetch_array($count_result);
+    $trade_counts = $count_row["trade_count"];
+
+    $pages = $trade_counts/4 + 1;
+
+    //Sell count
+    $sell_ing_count_sql = "SELECT COUNT(*) as sell_ing_trade_count FROM ITEM_TB WHERE user_no = ".$_SESSION["user_no"]." AND trade_type = 1 AND (trade_state = 1 OR trade_state = 2);";
+
+    $sell_ing_count_result = mysqli_query($connect, $sell_ing_count_sql);
+    $sell_ing_count_row = mysqli_fetch_array($sell_ing_count_result);
+    $sell_ing_trade_counts = $sell_ing_count_row["sell_ing_trade_count"];
+
+    $sell_ed_count_sql = "SELECT COUNT(*) as sell_ed_trade_count FROM ITEM_TB WHERE user_no = ".$_SESSION["user_no"]." AND trade_type = 1 AND trade_state = 3;";
+
+    $sell_ed_count_result = mysqli_query($connect, $sell_ed_count_sql);
+    $sell_ed_count_row = mysqli_fetch_array($sell_ed_count_result);
+    $sell_ed_trade_counts = $sell_ed_count_row["sell_ed_trade_count"];
+    //Buy count
+    $buy_ing_count_sql = "SELECT COUNT(*) as buy_ing_trade_count FROM ITEM_TB WHERE user_no = ".$_SESSION["user_no"]." AND trade_type = 2 AND (trade_state = 1 OR trade_state = 2);";
+
+    $buy_ing_count_result = mysqli_query($connect, $buy_ing_count_sql);
+    $buy_ing_count_row = mysqli_fetch_array($buy_ing_count_result);
+    $buy_ing_trade_counts = $buy_ing_count_row["buy_ing_trade_count"];
+
+    $buy_ed_count_sql = "SELECT COUNT(*) as buy_ed_trade_count FROM ITEM_TB WHERE user_no = ".$_SESSION["user_no"]." AND trade_type = 2 AND trade_state = 3;";
+
+    $buy_ed_count_result = mysqli_query($connect, $buy_ed_count_sql);
+    $buy_ed_count_row = mysqli_fetch_array($buy_ed_count_result);
+    $buy_ed_trade_counts = $buy_ed_count_row["buy_ed_trade_count"];
 ?>
 
 <div class="user_trade_history_overview row">
@@ -9,8 +48,8 @@
         </div>
         <div class="card-body">
             <div class="card-text trade_all">
-                <span class="trade_ing">진행중</span><span class="trade_number">X건</span>
-                <span class="trade_complete">거래완료</span><span class="trade_number">X건</span>
+                <span class="trade_ing">진행중</span><span class="trade_number"><?php echo $sell_ing_trade_counts + $buy_ing_trade_counts;?>건</span>
+                <span class="trade_complete">거래완료</span><span class="trade_number"><?php echo $sell_ed_trade_counts + $buy_ed_trade_counts;?>건</span>
             </div>
         </div>
    </div>
@@ -20,8 +59,8 @@
         </div>
         <div class="card-body">
             <div class="card-text trade_sell">
-                <span class="trade_ing">진행중</span><span class="trade_number">X건</span>
-                <span class="trade_complete">거래완료</span><span class="trade_number">X건</span>
+                <span class="trade_ing">진행중</span><span class="trade_number"><?php echo $sell_ing_trade_counts;?>건</span>
+                <span class="trade_complete">거래완료</span><span class="trade_number"><?php echo $sell_ed_trade_counts;?>건</span>
             </div>
         </div>
     </div>
@@ -31,8 +70,8 @@
         </div>
         <div class="card-body">
             <div class="card-text trade_buy">
-                <span class="trade_ing">진행중</span><span class="trade_number">X건</span>
-                <span class="trade_complete">거래완료</span><span class="trade_number">X건</span>
+                <span class="trade_ing">진행중</span><span class="trade_number"><?php echo $buy_ing_trade_counts;?>건</span>
+                <span class="trade_complete">거래완료</span><span class="trade_number"><?php echo $buy_ed_trade_counts;?>건</span>
             </div>
         </div>
     </div>
@@ -42,9 +81,9 @@
         <tbody>
 
 <?php
-    include "../../DB/database.php";
 
-    $sql = "SELECT no, trade_type, trade_state, server, title, price, date FROM ITEM_TB WHERE user_no = ".$_SESSION["user_no"]." ORDER BY no DESC LIMIT 10;";
+    $sql = "SELECT no, trade_type, trade_state, server, title, price, date FROM ITEM_TB WHERE user_no = ".$_SESSION["user_no"]." ORDER BY no DESC LIMIT $offset, $trade_count;";
+
     $result = mysqli_query($connect, $sql);
     if($row = mysqli_fetch_array($result)){
         switch($row["trade_type"]){
@@ -78,18 +117,40 @@ END;
     } else {
         echo "<div class='trade_history_blink'>등록된 거래가 없습니다</div>";
     }
-    
-    mysqli_close($connect);
 ?>
         </tbody>
     </table>
 </div>
+<div class="contents_bottom_bar">
+    <?php
+        echo "<span class='pages'>";
+        for ($i = 1; $i < $pages; $i++){
+            echo "<span><a class='page' page_no='$i'>$i</a></span>";
+        }
+        echo "</span>";
+
+        mysqli_close($connect);
+    ?>
+</div>
 <script>
-    $(document).ready(function(){
-        countSellTrade();
-        countBuyTrade();
-        countAllTrade();
-    });
+    $(".page").click(function(){
+        var hiddenForm = document.createElement("form");
+        hiddenForm.setAttribute("method", "post");
+        $("<input></input>").attr({type:"hidden", name:"page", value:$(this).attr("page_no")}).appendTo(hiddenForm);
+        var data = $(hiddenForm).serialize();
+        $.ajax({
+            type: "post",
+            url: "module/mypage/tradeOverView_module.php",
+            data: data,
+            success : function connect(a){
+
+                $("#mypage_content").html(a); 
+                
+            },
+            error : function error(){alert("error");}
+        });
+    });    
+
     //item price converting
     $(".trade_price").each( function() {convertPrice(this)});
 
@@ -129,26 +190,5 @@ END;
                 $(obj).html(high+"억"+middle+"만"+low+"골드");
             }
         }
-    }
-
-    function countAllTrade(){
-        var ingCount = $(".trade_item_state_11").length + $(".trade_item_state_12").length + $(".trade_item_state_21").length + $(".trade_item_state_22").length;
-        $(".trade_all > .trade_ing").next().html(ingCount+"건");
-        var edCount = $(".trade_item_state_13").length + $(".trade_item_state_23").length;
-        $(".trade_all > .trade_complete").next().html(edCount+"건");
-    }
-
-    function countSellTrade(){
-        var ingCount = $(".trade_item_state_11").length + $(".trade_item_state_12").length;
-        $(".trade_sell > .trade_ing").next().html(ingCount+"건");
-        var edCount = $(".trade_item_state_13").length;
-        $(".trade_sell > .trade_complete").next().html(edCount+"건");
-    }
-
-    function countBuyTrade(){
-        var ingCount = $(".trade_item_state_21").length + $(".trade_item_state_22").length;
-        $(".trade_buy > .trade_ing").next().html(ingCount+"건");
-        var edCount = $(".trade_item_state_23").length;
-        $(".trade_buy > .trade_complete").next().html(edCount+"건");
     }
 </script>

@@ -12,7 +12,20 @@
 
                 include"../../../DB/database.php";
 
-                $sql = "SELECT no, category, title, date, state FROM REPORT_TB WHERE user_no = $_SESSION[user_no] ORDER BY no DESC;";
+                $report_count = 4;
+                $page = isset($_POST["page"]) ? intval($_POST["page"]) : 1;
+                $offset = ($page-1)*$report_count;
+
+                $count_sql = "SELECT COUNT(*) as report_count FROM REPORT_TB WHERE user_no = $_SESSION[user_no];";
+
+                $count_result = mysqli_query($connect, $count_sql);
+                $count_row = mysqli_fetch_array($count_result);
+                $report_counts = $count_row["report_count"];
+
+                $pages = $report_counts/4 + 1;
+
+                $sql = "SELECT no, category, title, date, state FROM REPORT_TB WHERE user_no = $_SESSION[user_no] ORDER BY no DESC LIMIT $offset, $report_count;";
+
                 //var_dump($sql);
                 $result = mysqli_query($connect, $sql);
                 //var_dump($result);
@@ -90,13 +103,20 @@ END;
                 } else {
                     echo '<tr><td></td><td class="report_blink">신고한 내용이 없습니다.</td></tr>';
                 }
-                mysqli_close($connect);
             ?>
         </tbody>
     </table>
-<!--    <div class="paging">
-        < 1 2 3 4 5 >
-    </div>-->
+    <div class="contents_bottom_bar">
+        <?php
+            echo "<span class='pages'>";
+            for ($i = 1; $i < $pages; $i++){
+                echo "<span><a class='page' page_no='$i'>$i</a></span>";
+            }
+            echo "</span>";
+
+            mysqli_close($connect);
+        ?>
+    </div>
     <div class="report_button">
         <button>신고하기</button>
     </div>
@@ -123,6 +143,23 @@ END;
         $.ajax({
             type: "post",
             url: "module/mypage/report/reportRegister_module.php",
+            success : function connect(a){
+
+                $("#mypage_content").html(a); 
+                
+            },
+            error : function error(){alert("error");}
+        });
+    });
+    $(".page").click(function(){
+        var hiddenForm = document.createElement("form");
+        hiddenForm.setAttribute("method", "post");
+        $("<input></input>").attr({type:"hidden", name:"page", value:$(this).attr("page_no")}).appendTo(hiddenForm);
+        var data = $(hiddenForm).serialize();
+        $.ajax({
+            type: "post",
+            url: "module/mypage/report/reportList_module.php",
+            data: data,
             success : function connect(a){
 
                 $("#mypage_content").html(a); 

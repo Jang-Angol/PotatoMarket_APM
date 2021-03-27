@@ -1,6 +1,8 @@
+<div class="category_bar"></div>
 <div class="warning_table">
     <table>
         <tbody>
+            <tr><th class="warning_type">카테고리</th><th class="warning_reason">경고사유</th><th class="warning_due">등록날짜</th></tr>
 <?php
 	session_start();
 
@@ -44,7 +46,7 @@ END;
 END;
 			}
     	} else {
-    		echo "<div class='warn_blink'>받은 경고내역이 없습니다</div>";
+    		echo "<tr><td></td><td class='warn_blink'>받은 경고내역이 없습니다</td></tr>";
     	}
     }
 ?>
