@@ -34,8 +34,11 @@
                         </select>
                     </span>
                     <span><input id="user_name" name="userName" type="text" class="form-control" maxlength="12" placeholder="캐릭터명" value=$user_name></span>
+                    <span><button id="user_name_double_check" class="double_check" type="button">중복확인</button></span>
                 </td>
             </tr>
+            <tr id="usable_user_name" class="register_error"><td><span>사용가능한 닉네임입니다.</span></td></tr>
+            <tr id="double_user_name" class="register_error"><td><span>중복되는 닉네임입니다.</span></td></tr>            
             <tr id="error_user_name" class="register_error"><td><span>올바르지 않은 닉네임입니다.</span></td></tr>
             <tr id="user_server_blink" class="register_error"><td><span>서버를 선택해주세요.</span></td></tr>
             <tr id="user_name_blink" class="register_error"><td><span>닉네임을 입력해주세요.</span></td></tr>
@@ -146,6 +149,8 @@ END;
         $("#user_server_blink").css("display","none");
         $("#user_name_blink").css("display","none");
         $("#error_user_name").css("display","none");
+        $("#double_user_name").css("display","none");
+        $("#usable_user_name").css("display","none");
 
         //USER SERVER check
         if($("#user_server").val()==""){
@@ -163,6 +168,54 @@ END;
                 return false;
             }
         }
+    }
+
+    function userNameDoubleCheck(){
+        $("#user_server_blink").css("display","none");
+        $("#user_name_blink").css("display","none");
+        $("#error_user_name").css("display","none");
+        $("#double_user_name").css("display","none");
+        $("#usable_user_name").css("display","none");
+
+        //USER SERVER check
+        if($("#user_server").val()==""){
+            $("#user_server_blink").css("display","block");
+            return false;
+        }
+
+        //USER NAME check
+        if($("#user_name").val()==""){
+            $("#user_name_blink").css("display","block");
+            return false;
+        } else{
+            if(!(userNameCheckKor.test($("#user_name").val())||userNameCheckEng.test($("#user_name").val()))){
+                $("#error_user_name").css("display","block");
+                return false;
+            }
+        }
+        var hiddenForm = document.createElement("form");
+        hiddenForm.setAttribute("method", "post");
+        $("<input></input>").attr({type:"hidden", name:"user_name", value:$("#user_name").val()}).appendTo(hiddenForm);
+        $("<input></input>").attr({type:"hidden", name:"user_server", value:$("#user_server").val()}).appendTo(hiddenForm);
+        var data = $(hiddenForm).serialize();
+        var result;
+        $.ajax({
+            type: "post",
+            url: "DB/userNameDoubleCheck_modify.php",
+            data: data,
+            async: false,
+            success : function connect(a){
+                if(a == 'true'){
+                    $("#usable_user_name").css("display","block");
+                } else {
+                    $("#double_user_name").css("display","block");
+                    result = false;
+                }
+            },
+            error : function error(){alert("error");}
+        })
+
+        return result;
     }
 
     function phoneNumCheck(){
@@ -203,6 +256,10 @@ END;
         userNameCheck();
     });
 
+    $("#user_name_double_check").click(function(){
+        userNameDoubleCheck();
+    });
+
     $("#phonenumber_head").keyup(function(){
         phoneNumCheck();
     });
@@ -222,15 +279,27 @@ END;
     function registerChk(){
         let success = true;
 
-        //USER SERVER check
-        success = userNameCheck();
+        //USER SERVER, NAME check
+        if(userNameCheck() == false){
+            success = false;
+        }
+
+        //USER NAME double check
+        if(userNameDoubleCheck() == false){
+            success = false;
+        }
 
         //PHONE NUMBER check
-        success = phoneNumCheck();
+        if(phoneNumCheck() == false){
+            success = false;
+        }
 
         //EMAIL check
-        success = email_Check();
+        if(email_Check() == false){
+            success = false;
+        }
 
         return success;
+
     }
 </script>

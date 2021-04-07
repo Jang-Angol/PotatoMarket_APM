@@ -81,9 +81,9 @@ END;
     </ul>
 </div>
 <script>
-    $(".category_bar > ul > li").click(function(){
+    $(".category_bar > ul > li > a").click(function(){
         $(".category_bar > ul > li").removeClass("current");
-        $(this).addClass("current");
+        $(this).parent().addClass("current");
     });
     
     $(".faq_contents").click(function(){

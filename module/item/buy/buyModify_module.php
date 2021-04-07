@@ -87,14 +87,20 @@ echo<<<END
                     <tr>
                         <th>검색 태그</th>
                         <td class="item-tag">
+                            <span>
 END;                    
                         if(count($tag) == 0){
-                            echo '<span><input type="text" class="form-control" name="item_tag1" maxlength="8"placeholder="#태그"></span>';
+                            echo '<input type="text" class="form-control" name="item_tag1" maxlength="8"placeholder="#태그">';
                         }
                         foreach($tag as $key => $value){
-                            echo '<span><input type="text" class="form-control" name="item_tag'.$key.'" maxlength="8"placeholder="#태그" value="'.$value.'"></span>';
+                            if($key > 0){
+                                echo '<input type="text" class="form-control" name="item_tag'.($key+1).'" maxlength="8" style="margin-left:10px;" placeholder="#태그" value="'.$value.'">';
+                            } else {
+                                echo '<input type="text" class="form-control" name="item_tag'.($key+1).'" maxlength="8"placeholder="#태그" value="'.$value.'">';
+                            }
                         }
 echo<<<END
+                                </span>
                             <button type="button" onclick="addTag();">+</button></td>
                     </tr>
                 </tbody>

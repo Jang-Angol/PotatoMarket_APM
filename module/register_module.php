@@ -371,6 +371,10 @@
         email_Check();
     });
 
+    $("#email_domain").click(function(){
+        email_Check();
+    });
+
     function registerChk(){
         let success = true;
 

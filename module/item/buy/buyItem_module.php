@@ -4,6 +4,14 @@
 <div class="sell_item_contents container">
 
 <?php
+    if(isset($_GET["page"])){
+        if($_GET["page"]<1){
+            echo "<script>alert('존재하지 않는 페이지 입니다.');</script>";
+            echo("<script>location.href='itemSell.php';</script>");
+
+        }
+    }
+
 	$item_count = 8;
 	$page = isset($_GET["page"]) ? intval($_GET["page"]) : 1;
 	$offset = ($page-1)*$item_count;
@@ -164,6 +172,13 @@
 
 	$pages = $item_count/8 + 1;
 
+    if(!empty($_GET["page"])){
+        if($_GET["page"]>$pages){
+            echo "<script>alert('존재하지 않는 페이지 입니다.');</script>";
+            echo("<script>location.href='itemBuy.php';</script>");
+        }
+    }
+
 	mysqli_close($connect);
 
     include "./module/item/serverCategory_module.php";
@@ -173,13 +188,37 @@
 ?>
     <div class="contents_bottom_bar">
         <?php
+            $_url = $_SERVER["REQUEST_URI"];
+            if(!empty($_GET["page"])){
+                $_url = substr($_url, 0, -5-strlen($_GET["page"]));
+            }
             echo "<span class='pages'>";
+            if(empty($_GET["page"])){
+                echo "<span><a href='{$_url}'>".htmlspecialchars("<")."</a></span>";
+            } else {
+                echo "<span><a href='{$_url}page=".($_GET["page"]-1)."'>".htmlspecialchars("<")."</a></span>";
+            }
             for ($i = 1; $i < $pages; $i++){
-                if(isset($_GET["server"])){
-                    echo "<span><a class='page' href='itemBuy.php?server=$_GET[server]&page=$i'>$i</a></span>";
+                $url = $_SERVER["REQUEST_URI"];
+                if(empty($_SERVER["QUERY_STRING"])){
+                    echo "<span><a class='page' href='$url?page=$i'>$i</a></span>";
                 } else {
-                    echo "<span><a class='page' href='itemBuy.php?page=$i'>$i</a></span>";
+                    if(!empty($_GET["page"])){
+                        $url = substr($url, 0, -5-strlen($_GET["page"]));
+                    }
+                    if($url[strlen($url)-1]=='?'||$url[strlen($url)-1]=='&'){
+                        echo "<span><a class='page' href='{$url}page=$i'>$i</a></span>";
+                    } else {
+                        echo "<span><a class='page' href='$url&page=$i'>$i</a></span>";
+                    }
                 }
+                //if(!empty($_GET["page"])&&);
+
+            }
+           if(empty($_GET["page"])){
+                echo "<span><a href='{$_url}?page=2'>".htmlspecialchars(">")."</a></span>";
+            } else {
+                echo "<span><a href='{$_url}page=".($_GET["page"]+1)."'>".htmlspecialchars(">")."</a></span>";
             }
             echo "</span>";
 

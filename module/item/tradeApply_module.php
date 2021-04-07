@@ -59,11 +59,14 @@
         if($("#apply_price").val().indexOf(0) == 0){
             console.log("not valid price");
             alert("0으로 시작하는 가격은 입력할 수 없습니다.");
+            $("#apply_price").val('');
             return false;
         }
 
         if(apply_price.length>11){
             alert("가격은 최대 999억까지 가능합니다.");
+            $("#apply_price").val('');
+            $("#price-preview").empty();
         }
         if(apply_price.length<5){
 

@@ -96,6 +96,7 @@
 
 			//UPDATE ITEM_TAG_TB
 			$sql = "DELETE FROM ITEM_TAG_TB WHERE item_no = $item_no;";
+			$result = mysqli_query($connect, $sql);
 			//$result = mysqli_query($connect, $sql);
 			if(count($tag)>0){
 				foreach($tag as $value){
