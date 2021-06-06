@@ -52,7 +52,7 @@ PW 영문 대소문자, 숫자, 특수문자(!,@,#,$,%,^,&,*)를 꼭 포함하�
 
 # 판매/구매 CRUD
 
-## 기획
+# 기획
 
 item 판매 (쇼핑몰처럼 구현)
 
@@ -119,17 +119,4 @@ item 판매 (쇼핑몰처럼 구현)
 5. 거래완료를 누름
 6. 거래내역(판매자, 구매자, 아이템 거래가격)이 등록됨
 
-## 레이아웃
-
-판매 게시글 기본 레이아웃
-
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/cd78213b-9fe0-4af2-beb6-c119d0a4da02/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/cd78213b-9fe0-4af2-beb6-c119d0a4da02/Untitled.png)
-
-판매 게시글 판매자 View
-
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/88675df9-9938-4448-b12b-34687a35ac32/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/88675df9-9938-4448-b12b-34687a35ac32/Untitled.png)
-
-판매 게시글 구매자(구매신청한 경우) View
-
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e36ca2cc-38d3-40b1-a518-9c5805b64241/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e36ca2cc-38d3-40b1-a518-9c5805b64241/Untitled.png)
 
