@@ -1,6 +1,6 @@
 ## 감자마켓
 
-![감자마켓 메인.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9eee5d47-f290-4554-a436-5e5ef23b3a0a/감자마켓_메인.png)
+<img src="https://user-images.githubusercontent.com/75571207/131248894-b4af39c5-856b-40cb-bf8d-57579e6e2586.png"/>
 
 [Detail/감자마켓](https://www.notion.so/Detail-c84408e7cd904a3fb2f22453b2f7b592)
 
